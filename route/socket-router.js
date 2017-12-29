@@ -10,19 +10,20 @@ const WebSocket = require('../model/socket');
 const socketRouter = module.exports = new Router();
 
 socketRouter.post('/socket', jsonParser, (request, response, next) => {
-//TODO: error handling
+  console.log('request', request.body);
+  //TODO: error handling
   return new WebSocket({
     address: request.body.address,
   }).save()
-		.then(() => response.sendStatus(204)) //TODO: In the WebSocket schema, return sockets at the end of the create method (after save of new Socket)
-		.catch(next);
+    .then(() => response.sendStatus(204)) //TODO: In the WebSocket schema, return sockets at the end of the create method (after save of new Socket)
+    .catch(next);
 });
 
-	socketRouter.get('/socket', (request, response, next) => {
-	//TODO: error handling
+socketRouter.get('/socket', (request, response, next) => {
+  //TODO: error handling
 
-	return WebSocket.find({}) //TODO: Need to confirm that this will return all active sockets without requiring a callback function.
+  return WebSocket.find({}) //TODO: Need to confirm that this will return all active sockets without requiring a callback function.
 
-		.then(sockets => response.json({sockets}))
-		.catch(next);
-	});
+    .then(sockets => response.json({sockets}))
+    .catch(next);
+});
