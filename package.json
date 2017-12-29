@@ -1,0 +1,36 @@
+{
+  "name": "block-chain-dev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest -i --coverage",
+    "lint": "eslint .",
+    "start": "node index.js",
+    "dbon": "mkdir -p ./db && mongod --dbpath ./db",
+    "dboff": "killall mongod"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "aws-sdk-mock": "^1.7.0",
+    "dotenv": "^4.0.0",
+    "eslint": "^4.12.1",
+    "jest": "^21.2.1",
+    "superagent": "^3.8.1"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.173.0",
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "crypto": "^1.0.1",
+    "express": "^4.16.2",
+    "faker": "^4.1.0",
+    "fs-extra": "^5.0.0",
+    "httperrors": "^2.3.0",
+    "jsonwebtoken": "^8.1.0",
+    "mongoose": "^4.13.7",
+    "multer": "^1.3.0",
+    "winston": "^2.4.0"
+  }
+}
