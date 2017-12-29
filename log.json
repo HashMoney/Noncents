@@ -3,3 +3,11 @@
 {"level":"info","message":"Server off","timestamp":"2017-12-29T22:46:49.833Z"}
 {"level":"info","message":"Server off","timestamp":"2017-12-29T22:47:20.088Z"}
 {"level":"info","message":"Server off","timestamp":"2017-12-29T22:48:35.795Z"}
+{"level":"info","message":"Processing : POST on : /socket","timestamp":"2017-12-29T22:59:21.604Z"}
+{"level":"info","message":"Server off","timestamp":"2017-12-29T22:59:21.618Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2017-12-29T23:06:36.316Z"}
+{"level":"info","message":"Processing : POST on : /socket","timestamp":"2017-12-29T23:06:36.340Z"}
+{"level":"info","message":"Server is off","timestamp":"2017-12-29T23:06:36.353Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2017-12-29T23:08:24.025Z"}
+{"level":"info","message":"Processing : POST on : /socket","timestamp":"2017-12-29T23:08:24.053Z"}
+{"level":"info","message":"Server is off","timestamp":"2017-12-29T23:08:24.065Z"}
