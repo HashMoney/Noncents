@@ -22,4 +22,21 @@ describe('/socket routes', () => {
         });
     });
   });
+
+  describe('get', ()=> {
+    test('get should retrieve the sockets from the server if no error', () => {
+      let addressToTest = {address : '209.210.157.165:7777'};
+      return superagent.post(`${apiURL}/socket`)
+        .send(addressToTest)
+        .then(() => {
+          return superagent.get(`${apiURL}/socket`)
+            .then(response => {
+              console.log(response.body);
+              expect(response.body.sockets[0].address).toContain('209.210.157.165:7777');
+            });
+
+        });
+    });
+  });
+
 });
