@@ -4,11 +4,14 @@ require('./lib/setup');
 
 const server = require('../lib/server');
 const superagent = require('superagent');
+const WebSocket = require('../model/socket');
+let webSocketRemove = () => WebSocket.remove({});
 
 const apiURL = `http://localhost:${process.env.PORT}`;
 
 describe('/socket routes', () => {
   beforeAll(server.start);
+  afterEach(webSocketRemove);
   afterAll(server.stop);
 
   describe('post', ()=> {
@@ -25,14 +28,14 @@ describe('/socket routes', () => {
 
   describe('get', ()=> {
     test('get should retrieve the sockets from the server if no error', () => {
-      let addressToTest = {address : '209.210.157.165:7777'};
+      let addressToTest = {address : '209.210.157.165:9999'};
       return superagent.post(`${apiURL}/socket`)
         .send(addressToTest)
         .then(() => {
           return superagent.get(`${apiURL}/socket`)
             .then(response => {
               console.log(response.body);
-              expect(response.body.sockets[0].address).toContain('209.210.157.165:7777');
+              expect(response.body.sockets[0].address).toContain('209.210.157.165:9999');
             });
 
         });
