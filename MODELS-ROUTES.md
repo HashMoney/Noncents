@@ -33,13 +33,15 @@ chains that are competing for longest chain get stored here and compared with ea
 
 ## Routes
 1. made to socket list
-### GETCHAIN
+### GET CHAIN
 whenever a server connects- it requests the longest chain
-### POSTCHAIN
+### POST CHAIN
 when a server generates a new block- it sends it to the other servers
-### GETSOCKETS
+### GET SOCKETS
 copies another peers sockets
-### POSTSOCKETS
+### POST SOCKETS
+adds sockets to peers
+### DELETE SOCKETS
 adds sockets to peers
 
 
