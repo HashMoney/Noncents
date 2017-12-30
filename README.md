@@ -1,4 +1,4 @@
-# Block Chian Dev
+# Block Chain Dev
 <!-- One Paragraph of project description goes here -->
 
 #### WIKI: https://github.com/HashMoney/block-chain-dev/wiki
