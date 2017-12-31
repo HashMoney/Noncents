@@ -12,27 +12,27 @@ const chainSchema = mongoose.Schema({
 
 chainSchema.methods.makeNextBlock = function(ledger){
   let latestBlock = this.currentChainArray[this.currentChainArray.length - 1];
-  console.log(latestBlock);
   return this._makeNextBlock(latestBlock, ledger);
 };
 
 chainSchema.methods._makeNextBlock = function(latestBlock, ledger){
   let nextIndex = latestBlock.index + 1;
   let timestamp = new Date();
-  let currentHash = this.makeBlockHash(nextIndex, timestamp, latestBlock.currentHash, ledger);
 
+  this.makeBlockHash(nextIndex, timestamp, latestBlock.currentHash, ledger)
+    .then(currentHash => {
+      let result = new Block(nextIndex, latestBlock.currentHash, timestamp, ledger, currentHash);
+      console.log(result);
+      return result;
+    });
 
-  if(typeof currentHash === 'string'){
-    console.log('current hash is ----------', currentHash);
-    return new Block(nextIndex, latestBlock.currentHash, timestamp, ledger, currentHash);
+  // return new Block(nextIndex, latestBlock.currentHash, timestamp, ledger, currentHash);
 
-  }
 };
 
 chainSchema.methods.makeBlockHash = function(nextIndex, timestamp, currentHash, ledger){
   return bcrypt.hash((nextIndex + timestamp + currentHash + ledger).toString(), HASH_SALT_ROUNDS)
     .then(newHash => {
-      console.log('-----------newhash', newHash);
       return newHash;
     });
 };
@@ -55,7 +55,7 @@ chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor conso
     return null;
   }
   console.log('Block is valid');
-  return true;
+  return true; //TODO: if true, push block to end of chain
 };
 
 module.exports = mongoose.model('chain', chainSchema);
