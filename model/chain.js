@@ -35,15 +35,15 @@ chainSchema.methods._addNextBlock = function(block) {
     this.currentChainArray.push(block);
 };
 
-chainSchema.methods.makeBlockHash = function(nextIndex, timestamp, currentHash, ledger){
-  return bcrypt.hash((nextIndex + timestamp + currentHash + ledger).toString(), HASH_SALT_ROUNDS)
+chainSchema.methods.makeBlockHash = function(nextIndex, timestamp, previousHash, ledger){
+  return bcrypt.hash((nextIndex + timestamp + previousHash + ledger).toString(), HASH_SALT_ROUNDS)
     .then(newHash => {
       return newHash;
     });
 };
 
 chainSchema.methods.calculateHashForBlock = function(block){
-  return this._makeBlockHash(block.nextIndex, block.timestamp, block.currentHash, block.ledger);
+  return this.makeBlockHash(block.nextIndex, block.timestamp, block.previousHash, block.ledger);
 };
 
 chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor console logs as error throws
@@ -53,16 +53,22 @@ chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor conso
     return null;
   }
   if(this.currentChainArray[block.index - 1].currentHash !== block.previousHash){
-    console.log(this.currentChainArray[block.index - 1].currentHash, block.previousHash);
+    // console.log(this.currentChainArray[block.index - 1].currentHash, block.previousHash);
     console.log('invalid previous currentHash');
     return null;
   }
-  if(this.calculateHashForBlock(block) !== block.currentHash){
-    console.log('invalid currentHash');
-    return null;
-  }
-  console.log('Block is valid');
-  return true; //TODO: if true, push block to end of chain
+  // bcrypt.compare(((block.nextIndex+ block.timestamp+ block.currentHash+ block.ledger), block.currentHash));
+  return this.calculateHashForBlock(block)
+    .then(hash => {
+      if(hash !== block.currentHash){
+        console.log('invalid currentHash');
+        console.log(hash, block.currentHash);
+        return null;
+      }
+      console.log('Block is valid');
+      return true; //TODO: if true, push block to end of chain
+    });
+
 };
 
 
