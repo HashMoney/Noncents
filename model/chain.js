@@ -1,6 +1,6 @@
 'use strict';
 
-const HASH_SALT_ROUNDS = 5;
+const HASH_SALT_ROUNDS = 0;
 
 const mongoose = require('mongoose');
 const Block = require('./block');
@@ -30,6 +30,11 @@ chainSchema.methods._makeNextBlock = function(latestBlock, ledger){
 
 };
 
+chainSchema.methods._addNextBlock = function(block) {
+  if(this.checkBlockValidity(block))
+    this.currentChainArray.push(block);
+};
+
 chainSchema.methods.makeBlockHash = function(nextIndex, timestamp, currentHash, ledger){
   return bcrypt.hash((nextIndex + timestamp + currentHash + ledger).toString(), HASH_SALT_ROUNDS)
     .then(newHash => {
@@ -42,6 +47,7 @@ chainSchema.methods.calculateHashForBlock = function(block){
 };
 
 chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor console logs as error throws
+  console.log(block);
   if(!this.currentChainArray[block.index - 1]){
     console.log('invalid index');
     return null;
