@@ -12,11 +12,11 @@ describe('/block routes', () => {
   beforeAll(server.start);
   afterAll(server.stop);
 
-  let mockBlock = new Block (0, 'mockblock', new Date(), 'ledger', 'asdfgasdfasdgasdf');
+  let mockBlock = new Block (1, 'one', new Date(), 'ledger', 'asdfgasdfasdgasdf');
 
   describe('post', ()=> {
     test('post should send a block to another server and respond with 204', () => {
-      return superagent.post(`${apiURL}/socket`)
+      return superagent.post(`${apiURL}/block`)
         .send(mockBlock)
         .then(response => {
           expect(response.status).toEqual(204);

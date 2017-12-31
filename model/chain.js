@@ -52,12 +52,13 @@ chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor conso
     console.log('invalid index');
     return null;
   }
-  if(this.currentChainArray[block.index - 1].hash !== block.previousHash){
-    console.log('invalid previous hash');
+  if(this.currentChainArray[block.index - 1].currentHash !== block.previousHash){
+    console.log(this.currentChainArray[block.index - 1].currentHash, block.previousHash);
+    console.log('invalid previous currentHash');
     return null;
   }
-  if(this.calculateHashForBlock(block) !== block.hash){
-    console.log('invalid hash');
+  if(this.calculateHashForBlock(block) !== block.currentHash){
+    console.log('invalid currentHash');
     return null;
   }
   console.log('Block is valid');

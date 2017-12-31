@@ -3,27 +3,34 @@
 const {Router} = require('express');
 const jsonParser = require('body-parser').json();
 const httpErrors = require('http-errors');
-const WebSocket = require('../model/socket');
+const Block = require('../model/block');
+const Chain = require('../model/chain');
 
-// const basicAuthMiddleware = require('../lib/basic-auth-middleware');
 
-const socketRouter = module.exports = new Router();
+let testChain = new Chain();
+let date = new Date();
+let hash = testChain.makeBlockHash(0, date, 'genesis', 'ledger');
+testChain.currentChainArray.push(new Block (0, 'genesis', date, 'ledger', 'one'));
+console.log(testChain.currentChainArray);
+// testChain.currentChainArray.push(testChain.makeNextBlock('sethIsBadAtPingPong, worse than nick'));
+// console.log(testChain.currentChainArray);
 
-socketRouter.post('/socket', jsonParser, (request, response, next) => {
+
+const blockRouter = module.exports = new Router();
+
+blockRouter.post('/block', jsonParser, (request, response, next) => {
   console.log('request', request.body);
+  console.log(testChain.currentChainArray);
   //TODO: error handling
+  let blockToValidate = request.body;
+  testChain.checkBlockValidity(blockToValidate);
+
   return new WebSocket({
     address: request.body.address,
   }).save()
-    .then(() => response.sendStatus(204)) //TODO: In the WebSocket schema, return sockets at the end of the create method (after save of new Socket)
+    .then(() => response.sendStatus(204))
     .catch(next);
 });
 
-socketRouter.get('/socket', (request, response, next) => {
-  //TODO: error handling
 
-  return WebSocket.find({}) //TODO: Need to confirm that this will return all active sockets without requiring a callback function.
-
-    .then(sockets => response.json({sockets}))
-    .catch(next);
-});
+//TODO: check validity
