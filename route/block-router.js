@@ -19,22 +19,22 @@ const blockRouter = module.exports = new Router();
 // $2a$10$yYObEAjMSPpFIO/6L9mQnuUVmL8XG9cICQvc5o2TwZckgdJu9gF62
 // $2a$10$HcgGgE1UsO3pBLoAQNq2yu.9M6QiGhsXTMJTmRM3AZJXRhmKzRQTO
 
-testChain.makeBlockHash(1, 1234, 'one', 'ledger')
-  .then(hash => console.log(hash));
-testChain.makeBlockHash(1, 1234, 'one', 'ledger')
-  .then(hash => console.log(hash));
-testChain.makeBlockHash(1, 1234, 'one', 'ledger')
-  .then(hash => console.log(hash));
-testChain.makeBlockHash(1, 1234, 'one', 'ledger')
-  .then(hash => console.log(hash));
-testChain.makeBlockHash(1, 1234, 'one', 'ledger')
-  .then(hash => console.log(hash));
-testChain.makeBlockHash(1, 1234, 'one', 'ledger')
-  .then(hash => console.log(hash));
-testChain.makeBlockHash(1, 1234, 'one', 'ledger')
-  .then(hash => console.log(hash));
-testChain.makeBlockHash(1, 1234, 'one', 'ledger')
-  .then(hash => console.log(hash));
+// testChain.makeBlockHash(1, 1234, 'one', 'ledger')
+//   .then(hash => console.log(hash));
+// testChain.makeBlockHash(1, 1234, 'one', 'ledger')
+//   .then(hash => console.log(hash));
+// testChain.makeBlockHash(1, 1234, 'one', 'ledger')
+//   .then(hash => console.log(hash));
+// testChain.makeBlockHash(1, 1234, 'one', 'ledger')
+//   .then(hash => console.log(hash));
+// testChain.makeBlockHash(1, 1234, 'one', 'ledger')
+//   .then(hash => console.log(hash));
+// testChain.makeBlockHash(1, 1234, 'one', 'ledger')
+//   .then(hash => console.log(hash));
+// testChain.makeBlockHash(1, 1234, 'one', 'ledger')
+//   .then(hash => console.log(hash));
+// testChain.makeBlockHash(1, 1234, 'one', 'ledger')
+//   .then(hash => console.log(hash));
                 
 
 blockRouter.post('/block', jsonParser, (request, response, next) => {

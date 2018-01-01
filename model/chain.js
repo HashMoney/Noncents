@@ -43,7 +43,11 @@ chainSchema.methods.makeBlockHash = function(nextIndex, timestamp, previousHash,
 };
 
 chainSchema.methods.calculateHashForBlock = function(block){
-  return this.makeBlockHash(block.nextIndex, block.timestamp, block.previousHash, block.ledger);
+  // return this.makeBlockHash(block.nextIndex, block.timestamp, block.previousHash, block.ledger);
+  console.log('starting compare.....');
+  console.log(block);
+  console.log('block.index', block.index, 'block.timestamp', block.timestamp, 'previousHash', block.previousHash, 'ledge', block.ledger, 'currentHash', block.currentHash);
+  return bcrypt.compare((block.nextIndex, block.timestamp, block.previousHash, block.ledger).toString(), block.currentHash);
 };
 
 chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor console logs as error throws
@@ -52,23 +56,22 @@ chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor conso
     console.log('invalid index');
     return null;
   }
+  console.log('got past index check');
   if(this.currentChainArray[block.index - 1].currentHash !== block.previousHash){
     // console.log(this.currentChainArray[block.index - 1].currentHash, block.previousHash);
     console.log('invalid previous currentHash');
     return null;
   }
-  // bcrypt.compare(((block.nextIndex+ block.timestamp+ block.currentHash+ block.ledger), block.currentHash));
-  return this.calculateHashForBlock(block)
-    .then(hash => {
-      if(hash !== block.currentHash){
-        console.log('invalid currentHash');
-        console.log(hash, block.currentHash);
-        return null;
-      }
-      console.log('Block is valid');
-      return true; //TODO: if true, push block to end of chain
-    });
+  console.log('got past previous hash check');
 
+  return this.calculateHashForBlock(block)
+    .then((hashCheck) => {
+      console.log('hash check: ', hashCheck);
+      if (hashCheck === false)
+        console.log('invalid currentHash');
+      else 
+        return true;
+    });
 };
 
 
