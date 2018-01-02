@@ -12,7 +12,7 @@ describe('/block routes', () => {
   beforeAll(server.start);
   afterAll(server.stop);
 
-  let mockBlock = new Block (1, 'one', '2017-12-31T22:39:27.677Z', 'ledger', '$2a$10$yYObEAjMSPpFIO/6L9mQnuUVmL8XG9cICQvc5o2TwZckgdJu9gF62');
+  let mockBlock = new Block(1, 'one', '2017-12-31T22:39:27.677Z', 'ledger', 'rExHtz+3PHbMpWkPsKp+EbmUGZUlXcP/LMfQ4G5gCDc=');
 
   describe('post', ()=> {
     test('post should send a block to another server and respond with 204', () => {

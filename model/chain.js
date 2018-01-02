@@ -4,7 +4,8 @@ const HASH_SALT_ROUNDS = 0;
 
 const mongoose = require('mongoose');
 const Block = require('./block');
-const bcrypt = require('bcrypt');
+const Hashes = require('jshashes');
+
 
 const chainSchema = mongoose.Schema({
   currentChainArray: [],
@@ -35,19 +36,20 @@ chainSchema.methods._addNextBlock = function(block) {
     this.currentChainArray.push(block);
 };
 
-chainSchema.methods.makeBlockHash = function(nextIndex, timestamp, previousHash, ledger){
-  return bcrypt.hash((nextIndex + timestamp + previousHash + ledger).toString(), HASH_SALT_ROUNDS)
-    .then(newHash => {
-      return newHash;
-    });
+chainSchema.methods.makeBlockHash = function(index, timestamp, previousHash, ledger){
+  var SHA256 = new Hashes.SHA256;
+  let testHash = SHA256.b64(index + timestamp + previousHash + ledger);
+  console.log('SHA256 hash', testHash);
+  return testHash;
 };
 
 chainSchema.methods.calculateHashForBlock = function(block){
-  return this.makeBlockHash(block.nextIndex, block.timestamp, block.previousHash, block.ledger);
+  console.log('block passed to calculateH4B method', block);
+  return this.makeBlockHash(block.index, block.timestamp, block.previousHash, block.ledger);
 };
 
 chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor console logs as error throws
-  console.log(block);
+  // console.log(block);
   if(!this.currentChainArray[block.index - 1]){
     console.log('invalid index');
     return null;
@@ -57,18 +59,14 @@ chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor conso
     console.log('invalid previous currentHash');
     return null;
   }
-  // bcrypt.compare(((block.nextIndex+ block.timestamp+ block.currentHash+ block.ledger), block.currentHash));
-  return this.calculateHashForBlock(block)
-    .then(hash => {
-      if(hash !== block.currentHash){
-        console.log('invalid currentHash');
-        console.log(hash, block.currentHash);
-        return null;
-      }
-      console.log('Block is valid');
-      return true; //TODO: if true, push block to end of chain
-    });
-
+  if (this.calculateHashForBlock(block) !== block.currentHash){
+    console.log('should be a new hash', this.calculateHashForBlock(block));
+    console.log('invalid currentHash');
+    console.log('doesn\'t make it here', block.currentHash);
+    return null;
+  }
+  console.log('Block is valid');
+  return true; //TODO: if true, push block to end of chain
 };
 
 
