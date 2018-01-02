@@ -1,7 +1,5 @@
 'use strict';
 
-const HASH_SALT_ROUNDS = 0;
-
 const mongoose = require('mongoose');
 const Block = require('./block');
 const Hashes = require('jshashes');
@@ -26,25 +24,24 @@ chainSchema.methods._makeNextBlock = function(latestBlock, ledger){
       console.log(result);
       return result;
     });
-
-  // return new Block(nextIndex, latestBlock.currentHash, timestamp, ledger, currentHash);
-
 };
 
 chainSchema.methods._addNextBlock = function(block) {
-  if(this.checkBlockValidity(block))
+  if(this.checkBlockValidity(block)) {
+    console.log('adding a new block to chain', block);
     this.currentChainArray.push(block);
+    console.log(this);
+    return this;
+  }
 };
 
 chainSchema.methods.makeBlockHash = function(index, timestamp, previousHash, ledger){
   let SHA256 = new Hashes.SHA256;
-  let testHash = SHA256.b64(index + timestamp + previousHash + ledger);
-  console.log('SHA256 hash', testHash);
-  return testHash;
+  let nextHash = SHA256.b64(index + timestamp + previousHash + ledger);
+  return nextHash;
 };
 
 chainSchema.methods.calculateHashForBlock = function(block){
-  console.log('block passed to calculateH4B method', block);
   return this.makeBlockHash(block.index, block.timestamp, block.previousHash, block.ledger);
 };
 
@@ -52,19 +49,17 @@ chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor conso
   // console.log(block);
   if(!this.currentChainArray[block.index - 1]){
     console.log('invalid index');
-    return null;
+    return false;
   }
   if(this.currentChainArray[block.index - 1].currentHash !== block.previousHash){
-    // console.log(this.currentChainArray[block.index - 1].currentHash, block.previousHash);
     console.log('invalid previous currentHash');
-    return null;
+    return false;
   }
   if (this.calculateHashForBlock(block) !== block.currentHash){
     console.log('invalid currentHash');
-    return null;
+    return false;
   }
   console.log('Block is valid');
-  console.log('should be a matching hash', this.calculateHashForBlock(block));
   return true; //TODO: if true, push block to end of chain
 };
 
