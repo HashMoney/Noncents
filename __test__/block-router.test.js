@@ -19,7 +19,10 @@ describe('/block routes', () => {
       return superagent.post(`${apiURL}/block`)
         .send(mockBlock)
         .then(response => {
+
+
           expect(response.status).toEqual(204);
+
         });
     });
   });
