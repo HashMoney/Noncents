@@ -372,3 +372,6 @@
 {"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-02T18:34:51.284Z"}
 {"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-02T18:34:51.333Z"}
 {"level":"info","message":"Server is off","timestamp":"2018-01-02T18:34:51.353Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-02T19:11:53.302Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-02T19:11:53.317Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-02T19:11:53.345Z"}

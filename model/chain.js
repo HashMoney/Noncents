@@ -37,7 +37,7 @@ chainSchema.methods._addNextBlock = function(block) {
 };
 
 chainSchema.methods.makeBlockHash = function(index, timestamp, previousHash, ledger){
-  var SHA256 = new Hashes.SHA256;
+  let SHA256 = new Hashes.SHA256;
   let testHash = SHA256.b64(index + timestamp + previousHash + ledger);
   console.log('SHA256 hash', testHash);
   return testHash;
@@ -60,12 +60,11 @@ chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor conso
     return null;
   }
   if (this.calculateHashForBlock(block) !== block.currentHash){
-    console.log('should be a new hash', this.calculateHashForBlock(block));
     console.log('invalid currentHash');
-    console.log('doesn\'t make it here', block.currentHash);
     return null;
   }
   console.log('Block is valid');
+  console.log('should be a matching hash', this.calculateHashForBlock(block));
   return true; //TODO: if true, push block to end of chain
 };
 
