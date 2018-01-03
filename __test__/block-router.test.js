@@ -20,18 +20,19 @@ describe('/block routes', () => {
   let block1 = testChain.makeNextBlock('ledger1');
 
   describe('post', ()=> {
+    test('runBlockFactory should continuously build blocks until and the testChain length should be the genesis block + the number of ledgers in the mock ledger', () => {
+      let mockFactoryLedgerArray = ['flone', 'fltwo', 'flthree', 'flfour', 'flfive'];
+      return testChain.runBlockFactory(mockFactoryLedgerArray)
+        .then(() => {
+          expect(testChain.currentChainArray.length).toEqual(6);
+        });
+    });
+
     test('post should send a block to another server and respond with 204', () => {
       return superagent.post(`${apiURL}/block`)
         .send(block1)
         .then(response => {
           expect(response.status).toEqual(200);
-        });
-    });
-    test('runBlockFactory should continuously build blocks until', () => {
-      let mockFactoryLedgerArray = ['flone', 'fltwo', 'flthree', 'flfour', 'flfive'];
-      return testChain.runBlockFactory(mockFactoryLedgerArray)
-        .then(() => {
-          expect(testChain.currentChainArray.length).toEqual(6);
         });
     });
 

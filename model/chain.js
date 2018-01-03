@@ -10,9 +10,7 @@ const chainSchema = mongoose.Schema({
   currentChainArray: [],
 });
 
-
 // Nicholas - this is the main functionality- it builds a new, valid block which can be posted to the other running servers and checked against them.
-
 chainSchema.methods.runBlockFactory = function(ledgerArray){
   if(!ledgerArray.length){
     return console.log('block Factory closed');
@@ -36,7 +34,6 @@ chainSchema.methods.runBlockFactory = function(ledgerArray){
 
 chainSchema.methods.makeNextBlock = function(ledger){
   let latestBlock = this.currentChainArray[this.currentChainArray.length - 1];
-  // console.log(latestBlock);
   return this._makeNextBlock(latestBlock, ledger);
 };
 
@@ -75,7 +72,6 @@ chainSchema.methods.calculateHashForBlock = function(block){
 };
 
 chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor console logs as error throws
-  // console.log('block to be checked', block);
   if(!this.currentChainArray[block.index - 1]){
     console.log('invalid index');
     return false;
@@ -89,7 +85,7 @@ chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor conso
     return false;
   }
   console.log('Block is valid');
-  return true; //TODO: if true, push block to end of chain
+  return true;
 };
 
 
@@ -103,12 +99,5 @@ chainSchema.methods.checkChainValidity = function (updatedChain, stableChain) {
   }
   return true;
 };
-
-// chainSchema.methods.removeChainFromDB = function () {
-//   this.collection.remove({})
-//     .then(() => {
-//       console.log('Chain removed from DB');
-//     });
-// };
 
 module.exports = mongoose.model('chain', chainSchema);
