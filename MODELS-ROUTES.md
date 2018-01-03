@@ -6,7 +6,7 @@
 1. index
 1. hash
 1. prev hash
-1. timestamp
+1. timeStamp
 1. ledger
 #### Hasher
 hashes the block

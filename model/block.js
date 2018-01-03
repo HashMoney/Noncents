@@ -1,22 +1,14 @@
 
 'use strict';
 
-const bcrypt = require('bcrypt');
-const crypto = require('crypto');
-
-
 class Block {
-  constructor(index, previousHash, timestamp, ledger, currentHash) {
+  constructor(index, previousHash, timeStamp, ledger, currentHash) {
     this.index = index;
     this.previousHash = previousHash;
-    this.timestamp = timestamp;
+    this.timeStamp = timeStamp;
     this.ledger = ledger;
     this.currentHash = currentHash;
   }
-
-	
-
-
 }
 
 module.exports = Block;
