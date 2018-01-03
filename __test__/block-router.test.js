@@ -17,6 +17,7 @@ describe('/block routes', () => {
 
   let testChain = new Chain();
   testChain.currentChainArray.push(new Block (0, 'genesis', 'genesisDate', 'genesisLedger', 'genesisHash'));
+
   let block1 = testChain.makeNextBlock('ledger1');
 
   describe('post', ()=> {
@@ -28,6 +29,7 @@ describe('/block routes', () => {
         });
     });
 
+    
     test('post should send a block to another server and respond with 204', () => {
       return superagent.post(`${apiURL}/block`)
         .send(block1)
