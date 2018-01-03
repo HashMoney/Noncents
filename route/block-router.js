@@ -14,7 +14,6 @@ if(!stableChain){
   stableChain = new Chain();
   stableChain.currentChainArray.push(new Block (0, 'genesis', 'genesisDate', 'genesisLedger', 'genesisHash'));
   console.log('Genesis Block Created');
-  // stableChain.save();
 }
 
 const blockRouter = module.exports = new Router();
@@ -22,7 +21,6 @@ const blockRouter = module.exports = new Router();
 
 blockRouter.post('/block', jsonParser, (request, response, next) => {
   //TODO: error handling
-  // console.log('request body', request.body);
   let blockToValidate = request.body;
   return stableChain._addNextBlock(blockToValidate)
     .save()
@@ -33,6 +31,3 @@ blockRouter.post('/block', jsonParser, (request, response, next) => {
     })
     .catch(next);
 });
-
-
-//TODO: check validity
