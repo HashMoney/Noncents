@@ -18,14 +18,6 @@ describe('/block routes', () => {
   let testChain = new Chain();
   testChain.currentChainArray.push(new Block (0, 'genesis', 'genesisDate', 'genesisLedger', 'genesisHash'));
   let block1 = testChain.makeNextBlock('ledger1');
-  let block2 = testChain.makeNextBlock('ledger2');
-  let block3 = testChain.makeNextBlock('ledger3');
-  let block4 = testChain.makeNextBlock('ledger4');
-  let block5 = testChain.makeNextBlock('ledger5');
-  let block6 = testChain.makeNextBlock('ledger6');
-
-
-  // let mockBlock = new Block(1, 'one', '2017-12-31T22:39:27.677Z', 'ledger', 'rExHtz+3PHbMpWkPsKp+EbmUGZUlXcP/LMfQ4G5gCDc=');
 
   describe('post', ()=> {
     test('post should send a block to another server and respond with 204', () => {
