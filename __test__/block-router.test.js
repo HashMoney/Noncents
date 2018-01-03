@@ -29,7 +29,6 @@ describe('/block routes', () => {
         });
     });
 
-    
     test('post should send a block to another server and respond with 204', () => {
       return superagent.post(`${apiURL}/block`)
         .send(block1)
@@ -38,11 +37,8 @@ describe('/block routes', () => {
         });
     });
 
+    //TODO: ADD EDGE CASE TESTS
 
-    //makes a new 'valid' block //callback function that
-    //sends to server a
-    //server a sends a 204
-    //then i append it to my own chain if you get a 204
-    //then i begin to build another block //calls the callback
+    //TODO: ADD ERROR CHECKING TESTS
   });
 });
