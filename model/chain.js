@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose');
 const Block = require('./block');
+const httpErrors = require('http-errors');
 const Hashes = require('jshashes');
 const superagent = require('superagent');
 const apiURL = `http://localhost:${process.env.PORT}`;
@@ -52,7 +53,10 @@ chainSchema.methods._makeNextBlock = function(latestBlock, ledger){
 };
 
 chainSchema.methods._addNextBlock = function(block) {
-  if(this.checkBlockValidity(block)) {
+  if (this.checkBlockValidity(block) === false) {
+    console.log('your block is broken');
+    throw new httpErrors(400, 'invalid information in block');
+  } else {
     console.log('adding a new block to chain');
     this.currentChainArray.push(block);
     return this;

@@ -21,6 +21,9 @@ const blockRouter = module.exports = new Router();
 
 blockRouter.post('/block', jsonParser, (request, response, next) => {
   //TODO: error handling
+  // if (!request) {
+  //   return next(new httpErrors(404, '__ERROR__ Not found.'));
+  // }
   let blockToValidate = request.body;
   return stableChain._addNextBlock(blockToValidate)
     .save()

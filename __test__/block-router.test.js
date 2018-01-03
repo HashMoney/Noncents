@@ -38,9 +38,22 @@ describe('/block routes', () => {
           expect(response.status).toEqual(200);
         });
     });
-
+      
     //TODO: ADD EDGE CASE TESTS
-
+      
     //TODO: ADD ERROR CHECKING TESTS
+    test('post should send ONE block to another server and if index error, should respond with 400', () => {
+      let mockBlock = testChain.makeNextBlock('ledger2');
+      console.log('first index', mockBlock.index);
+      mockBlock.index = null;
+      console.log('second index', mockBlock.index);
+      return superagent.post(`${apiURL}/block`)
+        .send(mockBlock)
+        .then(Promise.reject)
+        .catch(response => {
+          // console.log(response.status);
+          expect(response.status).toEqual(400);
+        });
+    });
   });
 });
