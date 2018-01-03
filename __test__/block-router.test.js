@@ -23,13 +23,20 @@ let setup = function() {
           if(!testChain){
 
             testChain = new Chain();
-            testChain.currentChainArray.push(new Block (0, 'genesis', 'genesisDate', 'genesisLedger', 'genesisHash'));
-            console.log('Genesis Block Created');
-            console.log(testChain);
+
+            return new Promise((resolve, reject) => {
+              return resolve();
+            })
+              .then(() => {
+                return testChain.makeGenesisBlock();
+              })
+              .then(() => {
+                console.log('Genesis Block Created');
+                console.log(testChain);
+              });
           }
           return testChain;
         });
-
     });
 };
 
@@ -37,11 +44,6 @@ describe('/block routes', () => {
   beforeAll(server.start);
   beforeAll(setup);
   afterAll(server.stop);
-
-  // testChain.currentChainArray.push(new Block (0, 'genesis', 'genesisDate', 'genesisLedger', 'genesisHash'));
-
-  // let testChain = Chain.collection.findOne({});
-
 
   describe('post', ()=> {
     test('runBlockFactory should continuously build blocks and the testChain length should be the genesis block + the number of elements in the mock ledger Array', () => {
@@ -76,7 +78,6 @@ describe('/block routes', () => {
         .send(mockBlock)
         .then(Promise.reject)
         .catch(response => {
-          // console.log(response.status);
           expect(response.status).toEqual(400);
         });
     });

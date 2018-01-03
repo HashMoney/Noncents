@@ -32,6 +32,31 @@ chainSchema.methods.runBlockFactory = function(ledgerArray){
       });
   }
 };
+chainSchema.methods.makeGenesisBlock = function() {
+  if(this.currentChainArray.length > 0) {
+    console.log('Genesis Block Already Exists');
+    return;
+  }
+  let index = 0;
+  let previousHash = '0000000000000000000000000000000000000000000000000000000000000000';
+  let timeStamp = 'genesisDate';
+  let ledger = 'genesisLedger';
+  let nonce = 0;
+
+  let currentHash = this.makeBlockHash(index, timeStamp, previousHash, ledger, nonce);
+
+  while (currentHash.slice(0, 2) !== '00') {
+    nonce++;
+    currentHash = this.makeBlockHash(index, timeStamp, previousHash, ledger, nonce);
+  }
+  console.log('genesis hash: ', currentHash, 'nonce: ', nonce);
+
+  let genesis = new Block(index, previousHash, timeStamp, ledger, currentHash, nonce);
+  this.currentChainArray.push(genesis);
+  this.save();
+  return this;
+
+};
 
 chainSchema.methods.makeNextBlock = function(ledger){
   let latestBlock = this.currentChainArray[this.currentChainArray.length - 1];
@@ -41,15 +66,15 @@ chainSchema.methods.makeNextBlock = function(ledger){
 chainSchema.methods._makeNextBlock = function(latestBlock, ledger){
   let nextIndex = latestBlock.index + 1;
   let timeStamp = new Date().toString();
-  let newHash = this.makeBlockHash(nextIndex, timeStamp, latestBlock.currentHash, ledger);
-  return new Block(nextIndex, latestBlock.currentHash, timeStamp, ledger, newHash);
+  let nonce = 0;
+  let newHash = this.makeBlockHash(nextIndex, timeStamp, latestBlock.currentHash, ledger, nonce);
+  while (newHash.slice(0, 2) !== '00') {
+    nonce++;
+    newHash = this.makeBlockHash(nextIndex, timeStamp, latestBlock.currentHash, ledger, nonce);
+  }
+  console.log('new hash: ', newHash, 'nonce: ', nonce);
 
-  //TODO: when we increase the difficulty of the hashing algorithm we will need to find a way to promisify this part of the code.
-  // .then(currentHash => {
-  //   let result = new Block(nextIndex, latestBlock.currentHash, timeStamp, ledger, currentHash);
-  //   console.log(result);
-  //   return result;
-  // });
+  return new Block(nextIndex, latestBlock.currentHash, timeStamp, ledger, newHash, nonce);
 };
 
 chainSchema.methods._addNextBlock = function(block) {
@@ -63,15 +88,16 @@ chainSchema.methods._addNextBlock = function(block) {
   }
 };
 
-chainSchema.methods.makeBlockHash = function(index, timeStamp, previousHash, ledger){
+chainSchema.methods.makeBlockHash = function(index, timeStamp, previousHash, ledger, nonce){
   let SHA256 = new Hashes.SHA256;
   let nextHash = SHA256.b64(index + timeStamp + previousHash + ledger);
-  return nextHash;
+  let nonceHash = SHA256.b64(nextHash + nonce);
+  return nonceHash;
 };
 
 chainSchema.methods.calculateHashForBlock = function(block){
 
-  let hashToCheck = this.makeBlockHash(block.index, block.timeStamp, block.previousHash, block.ledger);
+  let hashToCheck = this.makeBlockHash(block.index, block.timeStamp, block.previousHash, block.ledger, block.nonce);
   return hashToCheck;
 };
 
