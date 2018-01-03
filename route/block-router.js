@@ -28,6 +28,7 @@ blockRouter.post('/block', jsonParser, (request, response, next) => {
   return new Promise((resolve, reject) => {
     return resolve();
   })
+
     .then(() => {
       return Chain.findOne({})
         .then(chain => {
