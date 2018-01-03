@@ -20,7 +20,7 @@ blockRouter.post('/block', jsonParser, (request, response, next) => {
       return Chain.findOne({})
         .then(chain => {
           stableChain = chain;
-          console.log(stableChain);
+          // console.log(stableChain);
           if(!stableChain){
 
             stableChain = new Chain();
@@ -32,20 +32,20 @@ blockRouter.post('/block', jsonParser, (request, response, next) => {
               })
               .then(() => {
                 console.log('Genesis Block Created');
-                console.log(stableChain);
+                // console.log(stableChain);
               });
           }
           return stableChain;
         })
         .then(() => {
           let blockToValidate = request.body;
-          console.log(blockToValidate);
+          // console.log(blockToValidate);
           stableChain._addNextBlock(blockToValidate);
           return stableChain.save();
         })
-        .then(chain => console.log(chain))
+        // .then(chain => console.log(chain))
         .then(() => {
-          console.log('New Block Successfully Added To Chain');
+          // console.log('New Block Successfully Added To Chain');
           response.send(stableChain.currentChainArray);
           response.sendStatus(204);
         })

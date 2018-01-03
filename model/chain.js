@@ -16,17 +16,17 @@ chainSchema.methods.runBlockFactory = function(ledgerArray){
   if(!ledgerArray.length){
     return console.log('block Factory closed');
   }else {
-    console.log(ledgerArray);
+    // console.log(ledgerArray);
     let ledger = ledgerArray.shift();
-    console.log(ledger);
+    // console.log(ledger);
     let newBlock = this.makeNextBlock(ledger);
     return superagent.post(`${apiURL}/block`)
       .send(newBlock)
       .then(response => {
         if(response.status === 200){
-          console.log(this.currentChainArray);
+          // console.log(this.currentChainArray);
           this.currentChainArray.push(newBlock);
-          console.log(this.currentChainArray);
+          // console.log(this.currentChainArray);
           return this.runBlockFactory(ledgerArray);
         }
       });
@@ -49,7 +49,7 @@ chainSchema.methods.makeGenesisBlock = function() {
     nonce++;
     currentHash = this.makeBlockHash(index, timeStamp, previousHash, ledger, nonce);
   }
-  console.log('genesis hash: ', currentHash, 'nonce: ', nonce);
+  // console.log('genesis hash: ', currentHash, 'nonce: ', nonce);
 
   let genesis = new Block(index, previousHash, timeStamp, ledger, currentHash, nonce);
   this.currentChainArray.push(genesis);
@@ -72,7 +72,7 @@ chainSchema.methods._makeNextBlock = function(latestBlock, ledger){
     nonce++;
     newHash = this.makeBlockHash(nextIndex, timeStamp, latestBlock.currentHash, ledger, nonce);
   }
-  console.log('new hash: ', newHash, 'nonce: ', nonce);
+  // console.log('new hash: ', newHash, 'nonce: ', nonce);
 
   return new Block(nextIndex, latestBlock.currentHash, timeStamp, ledger, newHash, nonce);
 };
