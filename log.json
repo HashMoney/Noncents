@@ -845,3 +845,19 @@
 {"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-03T03:03:39.652Z"}
 {"level":"info","message":"Processing : GET on : /chain","timestamp":"2018-01-03T03:03:39.655Z"}
 {"level":"info","message":"Server is off","timestamp":"2018-01-03T03:03:40.104Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-03T05:28:18.347Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-03T05:28:18.377Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-03T05:28:18.922Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-03T05:28:19.005Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-03T05:28:19.081Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-03T05:28:19.163Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-03T05:28:19.244Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-03T05:28:19.326Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-03T05:28:19.489Z"}
+{"level":"info","message":"Processing : POST on : /socket","timestamp":"2018-01-03T05:28:19.556Z"}
+{"level":"info","message":"Processing : POST on : /socket","timestamp":"2018-01-03T05:28:20.051Z"}
+{"level":"info","message":"Processing : GET on : /socket","timestamp":"2018-01-03T05:28:20.121Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-03T05:28:20.263Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-03T05:28:20.504Z"}
+{"level":"info","message":"Processing : GET on : /chain","timestamp":"2018-01-03T05:28:20.507Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-03T05:28:20.946Z"}
