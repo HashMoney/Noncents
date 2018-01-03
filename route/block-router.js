@@ -7,21 +7,8 @@ const Block = require('../model/block');
 const Chain = require('../model/chain');
 
 let stableChain;
-//   .then(() => {
-//
-//     console.log(stableChain);
-//     if(!stableChain){
-//
-//       stableChain = new Chain();
-//       stableChain.currentChainArray.push(new Block (0, 'genesis', 'genesisDate', 'genesisLedger', 'genesisHash'));
-//       console.log('Genesis Block Created');
-//     }
-//
-//   });
-
 
 const blockRouter = module.exports = new Router();
-
 
 blockRouter.post('/block', jsonParser, (request, response, next) => {
   //TODO: error handling
@@ -37,9 +24,16 @@ blockRouter.post('/block', jsonParser, (request, response, next) => {
           if(!stableChain){
 
             stableChain = new Chain();
-            stableChain.currentChainArray.push(new Block (0, 'genesis', 'genesisDate', 'genesisLedger', 'genesisHash'));
-            console.log('Genesis Block Created');
-            console.log(stableChain);
+            return new Promise((resolve, reject) => {
+              return resolve();
+            })
+              .then(() => {
+                return stableChain.makeGenesisBlock()
+              })
+              .then(() => {
+                console.log('Genesis Block Created');
+                console.log(stableChain);
+              });
           }
           return stableChain;
         })
@@ -61,4 +55,3 @@ blockRouter.post('/block', jsonParser, (request, response, next) => {
 
 
 });
-// });
