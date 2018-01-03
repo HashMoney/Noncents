@@ -36,6 +36,7 @@ chainSchema.methods.runBlockFactory = function(ledgerArray){
 
 chainSchema.methods.makeNextBlock = function(ledger){
   let latestBlock = this.currentChainArray[this.currentChainArray.length - 1];
+  // console.log(latestBlock);
   return this._makeNextBlock(latestBlock, ledger);
 };
 
@@ -102,5 +103,12 @@ chainSchema.methods.checkChainValidity = function (updatedChain, stableChain) {
   }
   return true;
 };
+
+// chainSchema.methods.removeChainFromDB = function () {
+//   this.collection.remove({})
+//     .then(() => {
+//       console.log('Chain removed from DB');
+//     });
+// };
 
 module.exports = mongoose.model('chain', chainSchema);
