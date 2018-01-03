@@ -27,7 +27,7 @@ describe('/block routes', () => {
           expect(response.status).toEqual(200);
         });
     });
-    test.only('runBlockFactory should continuously build blocks until', () => {
+    test('runBlockFactory should continuously build blocks until', () => {
       let mockFactoryLedgerArray = ['flone', 'fltwo', 'flthree', 'flfour', 'flfive'];
       return testChain.runBlockFactory(mockFactoryLedgerArray)
         .then(() => {
