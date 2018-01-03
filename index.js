@@ -10,4 +10,3 @@ process.env.MONGODB_URI = 'mongodb://heroku_61rbrfdl:auii88ojlv9kju52l3mt6qmuin@
 // process.env.MONGODB_URI = 'mongodb://localhost/testing';
 
 server.start();
-
