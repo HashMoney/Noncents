@@ -19,7 +19,7 @@ let setup = function() {
       return Chain.findOne({})
         .then(chain => {
           testChain = chain;
-          console.log(testChain);
+          // console.log(testChain);
           if(!testChain){
 
             testChain = new Chain();
@@ -32,7 +32,7 @@ let setup = function() {
               })
               .then(() => {
                 console.log('Genesis Block Created');
-                console.log(testChain);
+                // console.log(testChain);
               });
           }
           return testChain;
@@ -71,9 +71,9 @@ describe('/block routes', () => {
     //TODO: ADD ERROR CHECKING TESTS
     test('post should send ONE block to another server and if index error, should respond with 400', () => {
       let mockBlock = testChain.makeNextBlock('ledger2');
-      console.log('first index', mockBlock.index);
+      // console.log('first index', mockBlock.index);
       mockBlock.index = null;
-      console.log('second index', mockBlock.index);
+      // console.log('second index', mockBlock.index);
       return superagent.post(`${apiURL}/block`)
         .send(mockBlock)
         .then(Promise.reject)
