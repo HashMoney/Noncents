@@ -49,8 +49,8 @@ BlockMockFactory.create = () => {
     currentHash: faker.random.alphaNumeric(42),
     nonce: faker.random.number(4),
   })
-    .then(Block => {
-      mockBlock = Block;
+    .then(mock => {
+      mockBlock = mock;
       return mockBlock;
     });
  
