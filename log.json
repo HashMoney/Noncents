@@ -1,1 +1,87 @@
 
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T19:42:22.559Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T19:42:24.873Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T19:42:26.042Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T19:42:27.481Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T19:42:27.875Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T19:42:28.089Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T19:42:29.575Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T19:42:30.037Z"}
+{"level":"info","message":"Processing : POST on : /","timestamp":"2018-01-04T19:42:30.253Z"}
+{"level":"info","message":"Returning a 404 from the catch all route.","timestamp":"2018-01-04T19:42:30.254Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-04T19:42:30.255Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T19:42:30.440Z"}
+{"level":"info","message":"Processing : GET on : /chain","timestamp":"2018-01-04T19:42:30.443Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-04T19:42:30.906Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:11:10.655Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T21:11:11.549Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T21:11:11.741Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T21:11:12.190Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T21:11:12.429Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T21:11:12.821Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T21:11:13.141Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T21:11:13.410Z"}
+{"level":"info","message":"Processing : POST on : /","timestamp":"2018-01-04T21:11:13.572Z"}
+{"level":"info","message":"Returning a 404 from the catch all route.","timestamp":"2018-01-04T21:11:13.572Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-04T21:11:13.574Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:11:13.842Z"}
+{"level":"info","message":"Processing : GET on : /chain","timestamp":"2018-01-04T21:11:13.845Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-04T21:11:14.311Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:12:20.046Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T21:12:21.222Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T21:12:21.948Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T21:12:22.272Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T21:12:22.653Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T21:12:22.932Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-04T21:12:24.528Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:12:24.760Z"}
+{"level":"info","message":"Processing : GET on : /chain","timestamp":"2018-01-04T21:12:24.817Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-04T21:12:25.238Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:16:39.861Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:17:27.410Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:18:01.725Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:19:35.341Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:23:48.960Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:24:22.497Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:25:16.434Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:26:55.155Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:28:10.109Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:29:48.209Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:30:16.474Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:31:03.973Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:31:20.709Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:44:31.094Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:44:51.092Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:44:58.978Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:45:42.817Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:46:42.216Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:49:38.765Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:49:45.455Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:49:56.304Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:50:15.305Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:53:05.725Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:53:14.927Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:54:01.159Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:55:11.174Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:55:24.129Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:55:35.169Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:56:19.079Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:56:41.036Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:58:04.611Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:58:08.479Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:58:21.415Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:58:25.786Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T21:59:20.639Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T22:07:12.089Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-04T22:07:17.940Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T22:07:18.135Z"}
+{"level":"info","message":"Processing : GET on : /chain","timestamp":"2018-01-04T22:07:18.140Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-04T22:07:18.660Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T22:07:26.407Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T22:07:42.483Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T22:08:09.683Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T22:08:30.348Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T22:09:12.234Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T22:10:29.324Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T22:11:14.763Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T22:11:28.608Z"}

@@ -5,7 +5,10 @@ const Block = require('./block');
 const httpErrors = require('http-errors');
 const Hashes = require('jshashes');
 const superagent = require('superagent');
-const apiURL = `http://localhost:${process.env.PORT}`;
+// const apiURL = `http://localhost:${process.env.PORT}`;
+const apiURL = `https://hash-money.herokuapp.com`;
+const faker = require('faker');
+
 
 const chainSchema = mongoose.Schema({
   currentChainArray: [],
@@ -116,6 +119,36 @@ chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor conso
   }
   console.log('Block is valid');
   return true;
+};
+
+chainSchema.methods.updateChain = function(){
+  return superagent.get(`${apiURL}/chain`)
+    .then(response => {
+      console.log('body : ',response.body);
+      console.log('this :', this);
+      this.currentChainArray = response.body[0].currentChainArray;
+      return this;
+    });
+};
+
+chainSchema.methods.mine = function(){
+  return this.updateChain()
+    .then(() => {
+      console.log(this);
+      return this.makeNextBlock(faker.lorem.words(10));
+    })
+    .then(block => {
+      return superagent.post(`${apiURL}/block`)
+        .send(block)
+        .then(response =>{
+          console.log(response.status);
+          console.log('block posted');
+          return;
+        })
+        .then(() => {
+          return this.mine();
+        });
+    });
 };
 
 
