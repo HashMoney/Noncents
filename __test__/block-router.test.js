@@ -97,18 +97,18 @@ describe('/block routes', () => {
     });
 
     test.only('post should try to send TWO of the SAME block, should respond with 409', () => {
-      let mockBlockObj = null;
       return BlockMockFactory.create()
         .then(block => {
-          mockBlockObj = block;
+          console.log('!!!!', block);
+          let mockBlockObj = block;
           return superagent.post(`${apiURL}/block`)
             .send({
-              index: mockBlockObj.request.index,
-              previousHash: mockBlockObj.request.previousHash,
-              timeStamp: mockBlockObj.request.timeStamp,
-              ledger: mockBlockObj.request.ledger,
-              currentHash: mockBlockObj.request.currentHash,
-              nonce: mockBlockObj.request.nonce,
+              index: mockBlockObj.index,
+              previousHash: mockBlockObj.previousHash,
+              timeStamp: mockBlockObj.timeStamp,
+              ledger: mockBlockObj.ledger,
+              currentHash: mockBlockObj.currentHash,
+              nonce: mockBlockObj.nonce,
             })	
             .then(Promise.reject)
             .catch(response => {
