@@ -72,7 +72,7 @@ describe('/block routes', () => {
     //TODO: ADD EDGE CASE TESTS
       
     //TODO: ADD ERROR CHECKING TESTS
-    test.only('post should send ONE block to another server and if index error, should respond with 400', () => {
+    test('post should send ONE block to another server and if index error, should respond with 400', () => {
       let mockBlock = testChain.makeNextBlock('ledger2');
       mockBlock.index = null;
       return superagent.post(`${apiURL}/block`)
@@ -83,7 +83,8 @@ describe('/block routes', () => {
           expect(response.status).toEqual(400);
         });
     });
-    test.only('post should try to send ONE block, but should respond with 404 if wrong route used', () => {
+    
+    test('post should try to send ONE block, but should respond with 404 if wrong route used', () => {
       let mockBlock = testChain.makeNextBlock('ledger2');
   
       return superagent.post(`${apiURL}/`)
@@ -96,31 +97,23 @@ describe('/block routes', () => {
     });
 
     test.only('post should try to send TWO of the SAME block, should respond with 409', () => {
-      let blockObj;
-      let blockObj2;
-      return new Promise ((resolve,reject) => {
-        return resolve();
-      })
-        .then(() => {
-          let blockObj = testChain.makeNextBlock('duplicate ledger');
-          console.log(blockObj);
-          return blockObj;
-        })
-        .then(blockObj => {
-          console.log(blockObj);
+      let mockBlockObj = null;
+      return BlockMockFactory.create()
+        .then(block => {
+          mockBlockObj = block;
           return superagent.post(`${apiURL}/block`)
-            .send({blockObj});
-        })
-        .then((block) => {
-          blockObj2 = block;
-          console.log(blockObj2);
-          return superagent.post(`${apiURL}/block`)
-            .send({ blockObj2});
-        })
-        .then(Promise.reject)
-        .catch(response => {
-          console.log(response.message);
-          expect(response.status).toEqual(409);
+            .send({
+              index: mockBlockObj.request.index,
+              previousHash: mockBlockObj.request.previousHash,
+              timeStamp: mockBlockObj.request.timeStamp,
+              ledger: mockBlockObj.request.ledger,
+              currentHash: mockBlockObj.request.currentHash,
+              nonce: mockBlockObj.request.nonce,
+            })	
+            .then(Promise.reject)
+            .catch(response => {
+              expect(response.status).toEqual(409);
+            });
         });
     });
   });
