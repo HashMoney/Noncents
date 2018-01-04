@@ -107,7 +107,7 @@ chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor conso
   //   return false;
   // }
   if(this.currentChainArray.length !== block.index){
-    console.log('invalid index');
+    console.log('invalid index', block.index);
     return false;
   }
   // if(!this.currentChainArray[block.index - 1]){

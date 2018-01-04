@@ -49,8 +49,9 @@ blockRouter.post('/block', jsonParser, (request, response, next) => {
           response.send(stableChain.currentChainArray);
           response.sendStatus(204);
         })
-        .catch(() => {
-          response.sendStatus(404);
-        });
+        .catch(next);
+        // .catch(() => {
+        //   response.sendStatus(400);
+        // });
     });
 });
