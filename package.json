@@ -1,9 +1,6 @@
 {
   "name": "block-chain-dev",
   "version": "1.0.0",
-  "engines": {
-    "node": "8.9.3"
-  },
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -37,5 +34,8 @@
     "jest": "^21.2.1",
     "superagent": "^3.8.1",
     "util": "^0.10.3"
-  }
+  },
+  "engines": {
+    "node": "8.9.3"
+  }    
 }
