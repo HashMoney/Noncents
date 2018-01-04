@@ -142,7 +142,11 @@ chainSchema.methods.mine = function(){
         .send(block)
         .then(response =>{
           console.log(response.status);
-          console.log('block posted');
+          if(response.status === 200){
+            console.log('block posted successfully');
+          }else{
+            console.log('unsuccessful post');
+          }
           return;
         })
         .then(() => {
