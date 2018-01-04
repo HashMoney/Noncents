@@ -81,5 +81,46 @@ describe('/block routes', () => {
           expect(response.status).toEqual(400);
         });
     });
+    
+    test('post should try to send ONE block, but should respond with 404 if wrong route used', () => {
+      let mockBlock = testChain.makeNextBlock('ledger2');
+  
+      return superagent.post(`${apiURL}/`)
+        .send(mockBlock)
+        .then(Promise.reject)
+        .catch(response => {
+          console.log(response.message);
+          expect(response.status).toEqual(404);
+        });
+    });
+
+    // test('post should try to send ONE block, but should respond with 404 if wrong route used', () => {
+    //   let blockObj;
+    //   let blockObj2;
+    //   return new Promise ((resolve,reject) => {
+    //     return resolve();
+    //   })
+    //     .then(() => {
+    //       let blockObj = testChain.makeNextBlock('duplicate ledger');
+    //       console.log(blockObj);
+    //       return blockObj;
+    //     })
+    //     .then(blockObj => {
+    //       console.log(blockObj);
+    //       return superagent.post(`${apiURL}/block`)
+    //         .send({blockObj});
+    //     })
+    //     .then((block) => {
+    //       blockObj2 = block;
+    //       console.log(blockObj2);
+    //       return superagent.post(`${apiURL}/block`)
+    //         .send({ blockObj2});
+    //     })
+    //     .then(Promise.reject)
+    //     .catch(response => {
+    //       console.log(response.message);
+    //       expect(response.status).toEqual(409);
+    //     });
+    // });
   });
 });

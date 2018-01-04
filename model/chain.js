@@ -119,15 +119,15 @@ chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor conso
 };
 
 
-chainSchema.methods.checkChainValidity = function (updatedChain, stableChain) {
-  if (stableChain.currentChainArray[0] !== updatedChain.currentChainArray[0]) {
-    return false;
-  }
+// chainSchema.methods.checkChainValidity = function (updatedChain, stableChain) {
+//   if (stableChain.currentChainArray[0] !== updatedChain.currentChainArray[0]) {
+//     return false;
+//   }
 
-  for (let block in updatedChain.currentChainArray) {
-    if (!this.checkBlockValidity(block)) return false;
-  }
-  return true;
-};
+//   for (let block in updatedChain.currentChainArray) {
+//     if (!this.checkBlockValidity(block)) return false;
+//   }
+//   return true;
+// };
 
 module.exports = mongoose.model('chain', chainSchema);
