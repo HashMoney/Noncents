@@ -39,30 +39,21 @@ BlockMockFactory.setup = function() {
 
 BlockMockFactory.create = () => {
   const mock = {};
-  // let mockBlock = null;
-  // let mockChain = null;
-  mock.request = {
+  let mockBlock = null;
+
+  return new Block (mock.request = {
     index: faker.random.number(),
     previousHash: faker.random.alphaNumeric(42),
     timeStamp: new Date(),
     ledger: faker.lorem.paragraphs(3),
     currentHash: faker.random.alphaNumeric(42),
     nonce: faker.random.number(4),
-  };
-
-  return (mock.request.index, mock.request.previousHash, mock.request.timeStamp, mock.request.ledger, mock.request.currentHash, mock.request.nonce)
-    .then(block => {
-      mock.block = block;
-      return block.currentHash;
-    })
-    .then(currentHash => {
-      mock.currentHash = currentHash;
-      return Block.findById(mock.block.currentHash);
-    })
-    .then(block => {
-      mock.block = block;
-      return mock;
+  })
+    .then(Block => {
+      mockBlock = Block;
+      return mockBlock;
     });
+ 
 };
 
    
