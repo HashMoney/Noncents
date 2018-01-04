@@ -106,3 +106,5 @@
 {"level":"info","message":"Server is off","timestamp":"2018-01-03T23:19:52.486Z"}
 {"level":"info","message":"Server is linstening on port undefined","timestamp":"2018-01-03T23:25:48.299Z"}
 {"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-03T23:27:36.960Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-03T23:59:50.824Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T00:02:45.025Z"}
