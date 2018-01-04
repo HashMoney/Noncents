@@ -102,6 +102,10 @@ chainSchema.methods.calculateHashForBlock = function(block){
 };
 
 chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor console logs as error throws
+  if(this.currentChainArray[block.index]){
+    console.log('invalid index');
+    return false;
+  }
   if(!this.currentChainArray[block.index - 1]){
     console.log('invalid index');
     return false;
