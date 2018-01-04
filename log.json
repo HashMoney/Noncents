@@ -296,3 +296,23 @@
 {"level":"info","message":"Returning a 404 from the catch all route.","timestamp":"2018-01-04T01:11:45.792Z"}
 {"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-04T01:11:47.097Z"}
 {"level":"info","message":"Server is off","timestamp":"2018-01-04T01:11:47.261Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T01:49:23.321Z"}
+{"level":"info","message":"Processing : GET on : /chain","timestamp":"2018-01-04T01:49:23.344Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-04T01:49:23.906Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T01:49:24.215Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-04T01:49:24.725Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T02:00:49.808Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-04T02:00:50.434Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T02:00:50.683Z"}
+{"level":"info","message":"Processing : GET on : /chain","timestamp":"2018-01-04T02:00:50.762Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-04T02:00:51.210Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T02:01:19.544Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-04T02:01:20.100Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T02:01:20.347Z"}
+{"level":"info","message":"Processing : GET on : /chain","timestamp":"2018-01-04T02:01:20.424Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-04T02:01:20.865Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T02:02:34.100Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-04T02:02:34.677Z"}
+{"level":"info","message":"Server is linstening on port 7000","timestamp":"2018-01-04T02:02:34.926Z"}
+{"level":"info","message":"Processing : GET on : /chain","timestamp":"2018-01-04T02:02:35.003Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-04T02:02:35.485Z"}

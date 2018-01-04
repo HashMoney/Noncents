@@ -8,7 +8,7 @@ const BlockMockFactory = module.exports = {};
 
 let testChain = null;
 
-let setup = function() {
+BlockMockFactory.setup = function() {
   return new Promise((resolve, reject) => {
     return resolve();
   })
@@ -49,25 +49,25 @@ BlockMockFactory.create = () => {
     currentHash: faker.random.alphaNumeric(42),
     nonce: faker.random.number(4),
   };
-  return setup() 
-    .then(chain => {
-      mockChain = chain;
-      console.log(chain);
-      return mockChain.makeNextBlock(mock.request.ledger);
-    })
-    .then(block => {
-      mockBlock = block;
-      return mockChain._addNextBlock(mockBlock);
-    })
-    .then(() => mockChain.save())
-    .then(() => {
-      mock.block = mockBlock;
-      console.log(mockChain);
-    })
-    .then(block => {
-      mock.block = block;
-      return mock;
-    });
+  // return setup() 
+  //   .then(chain => {
+  //     mockChain = chain;
+  //     console.log(chain);
+  //     return mockChain.makeNextBlock(mock.request.ledger);
+  //   });
+  //   .then(block => {
+  //     mockBlock = block;
+  //     return mockChain._addNextBlock(mockBlock);
+  //   })
+  //   .then(() => mockChain.save())
+  //   .then(() => {
+  //     mock.block = mockBlock;
+  //     console.log(mockChain);
+  //   })
+  //   .then(block => {
+  //     mock.block = block;
+  //     return mock;
+  //   });
 
    
 };

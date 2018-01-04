@@ -8,38 +8,40 @@ const Block = require('../model/block');
 const Chain = require('../model/chain');
 const faker = require('faker');
 const BlockMockFactory = require('./lib/mockBlock');
+let setup = BlockMockFactory.setup; 
+let testChain = BlockMockFactory.testChain;
 
 const apiURL = `http://localhost:${process.env.PORT}`;
-let testChain = null;
 
-let setup = function() {
-  return new Promise((resolve, reject) => {
-    return resolve();
-  })
-    .then(() => {
-      return Chain.findOne({})
-        .then(chain => {
-          testChain = chain;
-          // console.log(testChain);
-          if(!testChain){
+// let testChain = null;
+// let setup = function() {
+//   return new Promise((resolve, reject) => {
+//     return resolve();
+//   })
+//     .then(() => {
+//       return Chain.findOne({})
+//         .then(chain => {
+//           testChain = chain;
+//           // console.log(testChain);
+//           if(!testChain){
 
-            testChain = new Chain();
+//             testChain = new Chain();
 
-            return new Promise((resolve, reject) => {
-              return resolve();
-            })
-              .then(() => {
-                return testChain.makeGenesisBlock();
-              })
-              .then(() => {
-                console.log('Genesis Block Created');
-                // console.log(testChain);
-              });
-          }
-          return testChain;
-        });
-    });
-};
+//             return new Promise((resolve, reject) => {
+//               return resolve();
+//             })
+//               .then(() => {
+//                 return testChain.makeGenesisBlock();
+//               })
+//               .then(() => {
+//                 console.log('Genesis Block Created');
+//                 // console.log(testChain);
+//               });
+//           }
+//           return testChain;
+//         });
+//     });
+// };
 
 describe('/block routes', () => {
   beforeAll(server.start);
@@ -93,7 +95,7 @@ describe('/block routes', () => {
         });
     });
 
-    test.only('post should try to send ONE block, but should respond with 404 if wrong route used', () => {
+    test.only('post should try to send TWO of the SAME block, should respond with 409', () => {
       let blockObj;
       let blockObj2;
       return new Promise ((resolve,reject) => {
