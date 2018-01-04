@@ -7,7 +7,6 @@ const superagent = require('superagent');
 const Block = require('../model/block');
 const Chain = require('../model/chain');
 const faker = require('faker');
-const BlockMockFactory = require('./lib/mockBlock');
 
 const apiURL = `http://localhost:${process.env.PORT}`;
 let testChain = null;
@@ -72,15 +71,17 @@ describe('/block routes', () => {
     //TODO: ADD ERROR CHECKING TESTS
     test('post should send ONE block to another server and if index error, should respond with 400', () => {
       let mockBlock = testChain.makeNextBlock('ledger2');
+      // console.log('first index', mockBlock.index);
       mockBlock.index = null;
+      // console.log('second index', mockBlock.index);
       return superagent.post(`${apiURL}/block`)
         .send(mockBlock)
         .then(Promise.reject)
         .catch(response => {
-          console.log(response.message);
           expect(response.status).toEqual(400);
         });
     });
+    
     test('post should try to send ONE block, but should respond with 404 if wrong route used', () => {
       let mockBlock = testChain.makeNextBlock('ledger2');
   
@@ -123,4 +124,3 @@ describe('/block routes', () => {
     // });
   });
 });
-
