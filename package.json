@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest -i --coverage",
     "lint": "eslint .",
-    "start": "node index.js",
+    "start": "npm install
+    node index.js",
     "dbon": "mkdir -p ./db && mongod --dbpath ./db",
     "dboff": "killall mongod"
   },
