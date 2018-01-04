@@ -46,14 +46,14 @@ describe('/block routes', () => {
   afterAll(server.stop);
 
   describe('post', ()=> {
-    test('runBlockFactory should continuously build blocks and the testChain length should be the genesis block + the number of elements in the mock ledger Array', () => {
-      let length = testChain.currentChainArray.length;
-      let mockFactoryLedgerArray = ['flone', 'fltwo', 'flthree', 'flfour', 'flfive'];
-      return testChain.runBlockFactory(mockFactoryLedgerArray)
-        .then(() => {
-          expect(testChain.currentChainArray.length).toEqual(length + 5);
-        });
-    });
+    // test('runBlockFactory should continuously build blocks and the testChain length should be the genesis block + the number of elements in the mock ledger Array', () => {
+    //   let length = testChain.currentChainArray.length;
+    //   let mockFactoryLedgerArray = ['flone', 'fltwo', 'flthree', 'flfour', 'flfive'];
+    //   return testChain.runBlockFactory(mockFactoryLedgerArray)
+    //     .then(() => {
+    //       expect(testChain.currentChainArray.length).toEqual(length + 5);
+    //     });
+    // });
 
     test('post should send ONE block to another server and respond with 204', () => {
       let mockBlock = testChain.makeNextBlock('ledger1');
