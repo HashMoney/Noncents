@@ -109,7 +109,9 @@ describe('/block routes', () => {
               ledger: mockBlockObj.ledger,
               currentHash: mockBlockObj.currentHash,
               nonce: mockBlockObj.nonce,
-            })	
+            }).then(() => {
+              return superagent.post(`${apiURL}/block`).send(mockBlockObj);
+            })
             .then(Promise.reject)
             .catch(response => {
               expect(response.status).toEqual(409);
