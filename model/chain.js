@@ -134,25 +134,23 @@ chainSchema.methods.updateChain = function(){
 chainSchema.methods.mine = function(){
   return this.updateChain()
     .then(() => {
-      console.log(this);
+      // console.log(this);
       return this.makeNextBlock(faker.lorem.words(10));
     })
     .then(block => {
       return superagent.post(`${apiURL}/block`)
         .send(block)
         .then(response =>{
+          // console.log(response.status);
+          console.log('block posted successfully');
           console.log(response.status);
-          if(response.status === 200){
-            console.log('block posted successfully');
-          }else{
-            console.log('unsuccessful post');
-          }
           return;
         })
         .then(() => {
           return this.mine();
         })
         .catch(() => {
+          console.log('someone else mined this block first');
           return this.mine();
         });
     });
