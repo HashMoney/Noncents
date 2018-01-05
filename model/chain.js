@@ -124,8 +124,8 @@ chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor conso
 chainSchema.methods.updateChain = function(){
   return superagent.get(`${apiURL}/chain`)
     .then(response => {
-      console.log('body : ',response.body);
-      console.log('this :', this);
+      // console.log('body : ',response.body);
+      // console.log('this :', this);
       this.currentChainArray = response.body[0].currentChainArray;
       return this;
     });
