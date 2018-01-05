@@ -11,4 +11,4 @@ server.start();
 let stableChain = new Chain();
 
 console.log('beginning mining');
-stableChain.mine(1);
+stableChain.mine();
