@@ -10,12 +10,9 @@ const logger = require('../lib/logger');
 const apiURL = `https://hash-money.herokuapp.com`;
 const faker = require('faker');
 
-
 const chainSchema = mongoose.Schema({
   currentChainArray: [],
 });
-
-// Nicholas - this is the main functionality- it builds a new, valid block which can be posted to the other running servers and checked against them.
 
 chainSchema.methods.makeGenesisBlock = function() {
   if(this.currentChainArray.length > 0) {
@@ -34,7 +31,6 @@ chainSchema.methods.makeGenesisBlock = function() {
     nonce++;
     currentHash = this.makeBlockHash(index, timeStamp, previousHash, ledger, nonce);
   }
-  // console.log('genesis hash: ', currentHash, 'nonce: ', nonce);
 
   let genesis = new Block(index, previousHash, timeStamp, ledger, currentHash, nonce);
   this.currentChainArray.push(genesis);
@@ -57,21 +53,9 @@ chainSchema.methods._makeNextBlock = function(latestBlock, ledger){
     nonce++;
     newHash = this.makeBlockHash(nextIndex, timeStamp, latestBlock.currentHash, ledger, nonce);
   }
-  // console.log('new hash: ', newHash, 'nonce: ', nonce);
 
   return new Block(nextIndex, latestBlock.currentHash, timeStamp, ledger, newHash, nonce);
 };
-
-// chainSchema.methods._addNextBlock = function(block) {
-//   if (this.checkBlockValidity(block) === false) {
-//     console.log('your block is broken');
-//     throw new httpErrors(400, 'invalid information in block');
-//   } else {
-//     console.log('adding a new block to chain');
-//     this.currentChainArray.push(block);
-//     return this;
-//   }
-// };
 
 chainSchema.methods.makeBlockHash = function(index, timeStamp, previousHash, ledger, nonce){
   let SHA256 = new Hashes.SHA256;
@@ -80,34 +64,9 @@ chainSchema.methods.makeBlockHash = function(index, timeStamp, previousHash, led
   return nonceHash;
 };
 
-// chainSchema.methods.calculateHashForBlock = function(block){
-//
-//   let hashToCheck = this.makeBlockHash(block.index, block.timeStamp, block.previousHash, block.ledger, block.nonce);
-//   return hashToCheck;
-// };
-
-// chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor console logs as error throws
-//   if(!this.currentChainArray[block.index - 1]){
-//     console.log('invalid index');
-//     return false;
-//   }
-//   if(this.currentChainArray[block.index - 1].currentHash !== block.previousHash){
-//     console.log('invalid previous currentHash');
-//     return false;
-//   }
-//   if (this.calculateHashForBlock(block) !== block.currentHash){
-//     console.log('invalid currentHash');
-//     return false;
-//   }
-//   console.log('Block is valid');
-//   return true;
-// };
-
 chainSchema.methods.updateChain = function(){
   return superagent.get(`${apiURL}/chain`)
     .then(response => {
-      // console.log('body : ',response.body);
-      // console.log('this :', this);
       if(response.body[0])
         this.currentChainArray = response.body[0].currentChainArray;
       return this;
@@ -116,7 +75,7 @@ chainSchema.methods.updateChain = function(){
 
 chainSchema.methods.mine = function(count=9999){
   if(count === 0){
-    console.log('finished mining for now');
+    console.log('Finished mining for now');
     return this.updateChain()
       .then(chain => {
         return chain;
@@ -125,28 +84,26 @@ chainSchema.methods.mine = function(count=9999){
   count--;
   return this.updateChain()
     .then(() => {
-      // console.log(this);
       return this.makeNextBlock(faker.lorem.words(10));
     })
     .then(block => {
-      console.log('block to post :', block);
-      logger.log('block to post :', block);
+      console.log('Block to post :', block);
+      logger.log('Block to post :', block);
       return superagent.post(`${apiURL}/block`)
         .send(block)
         .then(response =>{
-          // console.log(response.status);
-          console.log('block posted successfully');
-          logger.log('block posted successfully');
+          console.log('Block posted successfully');
+          logger.log('Block posted successfully');
           console.log(response.status);
           return;
         })
         .then(() => {
           return this.mine(count);
+        })
+        .catch(() => {
+          console.log('someone else mined this block first');
+          return this.mine(count);
         });
-      // .catch(() => {
-      //   console.log('someone else mined this block first');
-      //   return this.mine(count);
-      // }); //TODO: uncomment this
     });
 };
 
