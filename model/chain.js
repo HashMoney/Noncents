@@ -5,6 +5,7 @@ const Block = require('./block');
 const httpErrors = require('http-errors');
 const Hashes = require('jshashes');
 const superagent = require('superagent');
+const logger = require('../lib/logger');
 // const apiURL = `http://localhost:${process.env.PORT}`;
 const apiURL = `https://hash-money.herokuapp.com`;
 const faker = require('faker');
@@ -15,26 +16,7 @@ const chainSchema = mongoose.Schema({
 });
 
 // Nicholas - this is the main functionality- it builds a new, valid block which can be posted to the other running servers and checked against them.
-chainSchema.methods.runBlockFactory = function(ledgerArray){
-  if(!ledgerArray.length){
-    return console.log('block Factory closed');
-  }else {
-    // console.log(ledgerArray);
-    let ledger = ledgerArray.shift();
-    // console.log(ledger);
-    let newBlock = this.makeNextBlock(ledger);
-    return superagent.post(`${apiURL}/block`)
-      .send(newBlock)
-      .then(response => {
-        if(response.status === 200){
-          // console.log(this.currentChainArray);
-          this.currentChainArray.push(newBlock);
-          // console.log(this.currentChainArray);
-          return this.runBlockFactory(ledgerArray);
-        }
-      });
-  }
-};
+
 chainSchema.methods.makeGenesisBlock = function() {
   if(this.currentChainArray.length > 0) {
     console.log('Genesis Block Already Exists');
@@ -80,16 +62,16 @@ chainSchema.methods._makeNextBlock = function(latestBlock, ledger){
   return new Block(nextIndex, latestBlock.currentHash, timeStamp, ledger, newHash, nonce);
 };
 
-chainSchema.methods._addNextBlock = function(block) {
-  if (this.checkBlockValidity(block) === false) {
-    console.log('your block is broken');
-    throw new httpErrors(400, 'invalid information in block');
-  } else {
-    console.log('adding a new block to chain');
-    this.currentChainArray.push(block);
-    return this;
-  }
-};
+// chainSchema.methods._addNextBlock = function(block) {
+//   if (this.checkBlockValidity(block) === false) {
+//     console.log('your block is broken');
+//     throw new httpErrors(400, 'invalid information in block');
+//   } else {
+//     console.log('adding a new block to chain');
+//     this.currentChainArray.push(block);
+//     return this;
+//   }
+// };
 
 chainSchema.methods.makeBlockHash = function(index, timeStamp, previousHash, ledger, nonce){
   let SHA256 = new Hashes.SHA256;
@@ -98,40 +80,49 @@ chainSchema.methods.makeBlockHash = function(index, timeStamp, previousHash, led
   return nonceHash;
 };
 
-chainSchema.methods.calculateHashForBlock = function(block){
+// chainSchema.methods.calculateHashForBlock = function(block){
+//
+//   let hashToCheck = this.makeBlockHash(block.index, block.timeStamp, block.previousHash, block.ledger, block.nonce);
+//   return hashToCheck;
+// };
 
-  let hashToCheck = this.makeBlockHash(block.index, block.timeStamp, block.previousHash, block.ledger, block.nonce);
-  return hashToCheck;
-};
-
-chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor console logs as error throws
-  if(!this.currentChainArray[block.index - 1]){
-    console.log('invalid index');
-    return false;
-  }
-  if(this.currentChainArray[block.index - 1].currentHash !== block.previousHash){
-    console.log('invalid previous currentHash');
-    return false;
-  }
-  if (this.calculateHashForBlock(block) !== block.currentHash){
-    console.log('invalid currentHash');
-    return false;
-  }
-  console.log('Block is valid');
-  return true;
-};
+// chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor console logs as error throws
+//   if(!this.currentChainArray[block.index - 1]){
+//     console.log('invalid index');
+//     return false;
+//   }
+//   if(this.currentChainArray[block.index - 1].currentHash !== block.previousHash){
+//     console.log('invalid previous currentHash');
+//     return false;
+//   }
+//   if (this.calculateHashForBlock(block) !== block.currentHash){
+//     console.log('invalid currentHash');
+//     return false;
+//   }
+//   console.log('Block is valid');
+//   return true;
+// };
 
 chainSchema.methods.updateChain = function(){
   return superagent.get(`${apiURL}/chain`)
     .then(response => {
       // console.log('body : ',response.body);
       // console.log('this :', this);
-      this.currentChainArray = response.body[0].currentChainArray;
+      if(response.body[0])
+        this.currentChainArray = response.body[0].currentChainArray;
       return this;
     });
 };
 
-chainSchema.methods.mine = function(){
+chainSchema.methods.mine = function(count=9999){
+  if(count === 0){
+    console.log('finished mining for now');
+    return this.updateChain()
+      .then(chain => {
+        return chain;
+      });
+  }
+  count--;
   return this.updateChain()
     .then(() => {
       // console.log(this);
@@ -139,34 +130,24 @@ chainSchema.methods.mine = function(){
     })
     .then(block => {
       console.log('block to post :', block);
+      logger.log('block to post :', block);
       return superagent.post(`${apiURL}/block`)
         .send(block)
         .then(response =>{
           // console.log(response.status);
           console.log('block posted successfully');
+          logger.log('block posted successfully');
           console.log(response.status);
           return;
         })
         .then(() => {
-          return this.mine();
-        })
-        .catch(() => {
-          console.log('someone else mined this block first');
-          return this.mine();
+          return this.mine(count);
         });
+      // .catch(() => {
+      //   console.log('someone else mined this block first');
+      //   return this.mine(count);
+      // }); //TODO: uncomment this
     });
 };
-
-
-// chainSchema.methods.checkChainValidity = function (updatedChain, stableChain) {
-//   if (stableChain.currentChainArray[0] !== updatedChain.currentChainArray[0]) {
-//     return false;
-//   }
-
-//   for (let block in updatedChain.currentChainArray) {
-//     if (!this.checkBlockValidity(block)) return false;
-//   }
-//   return true;
-// };
 
 module.exports = mongoose.model('chain', chainSchema);
