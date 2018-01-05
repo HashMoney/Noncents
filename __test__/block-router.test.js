@@ -10,35 +10,36 @@ const faker = require('faker');
 
 // const apiURL = `http://localhost:${process.env.PORT}`;
 const apiURL = `https://hash-money.herokuapp.com`;
-let testChain = null;
+let testChain = new Chain();
 
 let setup = function() {
   return new Promise((resolve, reject) => {
     return resolve();
   })
     .then(() => {
-      return Chain.findOne({})
-        .then(chain => {
-          testChain = chain;
-          // console.log(testChain);
-          if(!testChain){
+      return testChain.updateChain();
+    })
+    .then(chain => {
+      testChain = chain;
+      // console.log(testChain);
+      if(!testChain){
 
-            testChain = new Chain();
+        testChain = new Chain();
 
-            return new Promise((resolve, reject) => {
-              return resolve();
-            })
-              .then(() => {
-                return testChain.makeGenesisBlock();
-              })
-              .then(() => {
-                console.log('Genesis Block Created');
-                // console.log(testChain);
-              });
-          }
-          return testChain;
-        });
+        return new Promise((resolve, reject) => {
+          return resolve();
+        })
+          .then(() => {
+            return testChain.makeGenesisBlock();
+          })
+          .then(() => {
+            console.log('Genesis Block Created');
+            // console.log(testChain);
+          });
+      }
+      return testChain;
     });
+
 };
 
 describe('/block routes', () => {
