@@ -56,6 +56,12 @@ describe('/block routes', () => {
     //       expect(testChain.currentChainArray.length).toEqual(length + 5);
     //     });
     // });
+    test('mine should send multiple blocks and return the updated chain', () => {
+      testChain.mine(1)
+        .then(chain => {
+          expect(chain).not.toBeNull();
+        });
+    });
 
     test('post should send ONE block to another server and respond with 204', () => {
       let mockBlock = testChain.makeNextBlock('ledger1');

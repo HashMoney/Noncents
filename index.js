@@ -24,5 +24,5 @@ mySocket.getSockets()
   });
 
 
-
+console.log('beginning mining');
 stableChain.mine();
