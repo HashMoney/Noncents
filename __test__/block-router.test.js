@@ -8,7 +8,8 @@ const Block = require('../model/block');
 const Chain = require('../model/chain');
 const faker = require('faker');
 
-const apiURL = `http://localhost:${process.env.PORT}`;
+// const apiURL = `http://localhost:${process.env.PORT}`;
+const apiURL = `https://hash-money.herokuapp.com`;
 let testChain = null;
 
 let setup = function() {
@@ -46,14 +47,14 @@ describe('/block routes', () => {
   afterAll(server.stop);
 
   describe('post', ()=> {
-    test('runBlockFactory should continuously build blocks and the testChain length should be the genesis block + the number of elements in the mock ledger Array', () => {
-      let length = testChain.currentChainArray.length;
-      let mockFactoryLedgerArray = ['flone', 'fltwo', 'flthree', 'flfour', 'flfive'];
-      return testChain.runBlockFactory(mockFactoryLedgerArray)
-        .then(() => {
-          expect(testChain.currentChainArray.length).toEqual(length + 5);
-        });
-    });
+    // test('runBlockFactory should continuously build blocks and the testChain length should be the genesis block + the number of elements in the mock ledger Array', () => {
+    //   let length = testChain.currentChainArray.length;
+    //   let mockFactoryLedgerArray = ['flone', 'fltwo', 'flthree', 'flfour', 'flfive'];
+    //   return testChain.runBlockFactory(mockFactoryLedgerArray)
+    //     .then(() => {
+    //       expect(testChain.currentChainArray.length).toEqual(length + 5);
+    //     });
+    // });
 
     test('post should send ONE block to another server and respond with 204', () => {
       let mockBlock = testChain.makeNextBlock('ledger1');
@@ -65,9 +66,9 @@ describe('/block routes', () => {
         });
     });
 
-      
+
     //TODO: ADD EDGE CASE TESTS
-      
+
     //TODO: ADD ERROR CHECKING TESTS
     test('post should send ONE block to another server and if index error, should respond with 400', () => {
       let mockBlock = testChain.makeNextBlock('ledger2');
@@ -81,10 +82,10 @@ describe('/block routes', () => {
           expect(response.status).toEqual(400);
         });
     });
-    
+
     test('post should try to send ONE block, but should respond with 404 if wrong route used', () => {
       let mockBlock = testChain.makeNextBlock('ledger2');
-  
+
       return superagent.post(`${apiURL}/`)
         .send(mockBlock)
         .then(Promise.reject)

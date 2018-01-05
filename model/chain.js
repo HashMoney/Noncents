@@ -5,7 +5,10 @@ const Block = require('./block');
 const httpErrors = require('http-errors');
 const Hashes = require('jshashes');
 const superagent = require('superagent');
-const apiURL = `http://localhost:${process.env.PORT}`;
+// const apiURL = `http://localhost:${process.env.PORT}`;
+const apiURL = `https://hash-money.herokuapp.com`;
+const faker = require('faker');
+
 
 const chainSchema = mongoose.Schema({
   currentChainArray: [],
@@ -45,7 +48,7 @@ chainSchema.methods.makeGenesisBlock = function() {
 
   let currentHash = this.makeBlockHash(index, timeStamp, previousHash, ledger, nonce);
 
-  while (currentHash.slice(0, 2) !== '00') {
+  while (currentHash.slice(0, 3) !== '000') {
     nonce++;
     currentHash = this.makeBlockHash(index, timeStamp, previousHash, ledger, nonce);
   }
@@ -68,7 +71,7 @@ chainSchema.methods._makeNextBlock = function(latestBlock, ledger){
   let timeStamp = new Date().toString();
   let nonce = 0;
   let newHash = this.makeBlockHash(nextIndex, timeStamp, latestBlock.currentHash, ledger, nonce);
-  while (newHash.slice(0, 2) !== '00') {
+  while (newHash.slice(0, 3) !== '000') {
     nonce++;
     newHash = this.makeBlockHash(nextIndex, timeStamp, latestBlock.currentHash, ledger, nonce);
   }
@@ -116,6 +119,42 @@ chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor conso
   }
   console.log('Block is valid');
   return true;
+};
+
+chainSchema.methods.updateChain = function(){
+  return superagent.get(`${apiURL}/chain`)
+    .then(response => {
+      // console.log('body : ',response.body);
+      // console.log('this :', this);
+      this.currentChainArray = response.body[0].currentChainArray;
+      return this;
+    });
+};
+
+chainSchema.methods.mine = function(){
+  return this.updateChain()
+    .then(() => {
+      // console.log(this);
+      return this.makeNextBlock(faker.lorem.words(10));
+    })
+    .then(block => {
+      console.log('block to post :', block);
+      return superagent.post(`${apiURL}/block`)
+        .send(block)
+        .then(response =>{
+          // console.log(response.status);
+          console.log('block posted successfully');
+          console.log(response.status);
+          return;
+        })
+        .then(() => {
+          return this.mine();
+        })
+        .catch(() => {
+          console.log('someone else mined this block first');
+          return this.mine();
+        });
+    });
 };
 
 

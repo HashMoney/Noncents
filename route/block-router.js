@@ -28,7 +28,7 @@ blockRouter.post('/block', jsonParser, (request, response, next) => {
               return resolve();
             })
               .then(() => {
-                return stableChain.makeGenesisBlock()
+                return stableChain.makeGenesisBlock();
               })
               .then(() => {
                 console.log('Genesis Block Created');
