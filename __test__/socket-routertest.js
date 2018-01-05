@@ -7,7 +7,9 @@ const superagent = require('superagent');
 const WebSocket = require('../model/socket');
 let webSocketRemove = () => WebSocket.remove({});
 
-const apiURL = `http://localhost:${process.env.PORT}`;
+// const apiURL = `http://localhost:${process.env.PORT}`;
+const apiURL = `https://hash-money.herokuapp.com`;
+
 
 describe('/socket routes', () => {
   beforeAll(server.start);
