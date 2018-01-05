@@ -1,13 +1,4 @@
-# Block Chain Dev
-<!-- One Paragraph of project description goes here -->
-
-#### WIKI: https://github.com/HashMoney/block-chain-dev/wiki
-
-**Travis CI**: https://travis-ci.org/HashMoney/block-chain-dev
-**Heroku App**:
-- Login: https:/dashboard.heroku.com/apps/hash-money
-- Deployment: https://hash-money.herokuapp.com/
-
+# Noncents
 
 ## Problem Domain
 
@@ -47,11 +38,17 @@ node index.js
 ```
 ![Mining Starts](https://github.com/HashMoney/block-chain-dev/blob/nodeStaging/Screen%20Shot%202018-01-05%20at%208.58.32%20AM.png?raw=true)
 
-```↑ Before```
+***↑ Before Mining***
 
-```After ↓```
+***After Mining ↓***
 
 ![Mining Example](https://github.com/HashMoney/block-chain-dev/blob/nodeStaging/Screen%20Shot%202018-01-05%20at%208.58.03%20AM.png?raw=true)
+
+For advanced users, a server side code base is available under the branch herokuStaging at the project's git repository.   
+
+```
+https://github.com/HashMoney/block-chain-dev.git
+```
 
 ## Running the tests
 To run the tests, you type into the command line `npm run test`
@@ -79,12 +76,37 @@ This will run all tests and output a coverage level (provided by Jest) describin
   - Catch all route for any unspecified routes.
   - Returns a 404 Not Found
 
-
 ## Built With
+
 - Node - JS Runtime Build  
 - Mongo DB - Chain Persistence  
 - Heroku - Hosted Deployment   
 - Travis CI -  Integration Testing 
+
+## Code Examples
+
+***Block from Chain***
+```
+{
+        "index": 1,
+        "previousHash": "000lUu0u82sRhgvltSGzbBJZefYnbv+E6py9dC1/0NU=",
+        "timeStamp": "Fri Jan 05 2018 08:54:21 GMT-0800 (PST)",
+        "ledger": "necessitatibus aut enim voluptates ut est sed dolor voluptas nulla",
+        "currentHash": "0006dXneGWKoICEfxybrwhwwu257M/cmFytTXdye4l0=",
+        "nonce": 616877
+      },
+```
+
+***Hashing Code Example***
+
+```
+chainSchema.methods.makeBlockHash = function(index, timeStamp, previousHash, ledger, nonce){
+  let SHA256 = new Hashes.SHA256;
+  let nextHash = SHA256.b64(index + timeStamp + previousHash + ledger);
+  let nonceHash = SHA256.b64(nextHash + nonce);
+  return nonceHash;
+};
+```
 
 ## NPM Packages Used 
 - Express - CRUD routes to server  
@@ -99,10 +121,15 @@ This will run all tests and output a coverage level (provided by Jest) describin
 - Seth Donohue
 - Nicholas Carignan
 - Jacob Evans
-See also the list of contributors who participated in this project.
 
 ## License
-This project is licensed under the MIT License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the [LICENSE.md](./LICENSE) file for details
+
+**WIKI**: https://github.com/HashMoney/block-chain-dev/wiki
+
+**Travis CI**: https://travis-ci.org/HashMoney/block-chain-dev
+
+**Heroku App** Deployment: https://hash-money.herokuapp.com/
 
 ## Acknowledgments
 - We referenced a compact 200-line blockchain called Naivechain, written in JS, in order to define best practices for our code https://github.com/lhartikk/naivechain/blob/master/main.js
