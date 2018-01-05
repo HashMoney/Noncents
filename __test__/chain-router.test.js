@@ -21,7 +21,6 @@ describe('/chain routes', () => {
     test('GET should respond with a body of the array of chains and a status of 204', () => {
       return superagent.get(`${apiURL}/chain`)
         .then(response => {
-          console.log(response.body);
           expect(response.status).toEqual(200);
         });
     });

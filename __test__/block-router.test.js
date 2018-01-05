@@ -38,13 +38,19 @@ let setup = function() {
     });
 };
 
-describe('/block routes', () => {
+
+describe('/block Routes', () => {
   beforeAll(server.start);
   beforeAll(setup);
   afterAll(server.stop);
 
-  describe('post', ()=> {
-    test('post should send ONE block to another server and respond with 204', () => {
+  describe('POST Route', ()=> {
+
+    test('Proper Setup should return undefined for makeGenesisBlock', () => {
+      expect(testChain.makeGenesisBlock()).toBeUndefined();
+    });
+    
+    test('post should respond with a 204 status if sent a correct block by a node', () => {
       let mockBlock = testChain.makeNextBlock('ledger1');
 
       return superagent.post(`${apiURL}/block`)
@@ -54,9 +60,10 @@ describe('/block routes', () => {
         });
     });
 
-    test('post should send ONE block to another server and if index error, should respond with 400', () => {
-      let mockBlock = testChain.makeNextBlock('ledger2');
+    test('post should respond with a 400 status if sent a block with an incorrect index', () => {
+      let mockBlock = testChain.makeNextBlock('ledger1');
       mockBlock.index = null;
+
       return superagent.post(`${apiURL}/block`)
         .send(mockBlock)
         .then(Promise.reject)
@@ -65,10 +72,10 @@ describe('/block routes', () => {
         });
     });
 
-    test('post should send ONE block to another server and if previousHash is incorrect then it should respond with 400', () => {
-      let mockBlock = testChain.makeNextBlock('ledger3');
+    test('post should respond with a 400 status if sent a block with an incorrect previousHash', () => {
+      let mockBlock = testChain.makeNextBlock('ledger1');
       mockBlock.previousHash = null;
-      console.log(mockBlock.previousHash);
+
       return superagent.post(`${apiURL}/block`)
         .send(mockBlock)
         .then(Promise.reject)
@@ -77,10 +84,10 @@ describe('/block routes', () => {
         });
     });
 
-    test('post should send ONE block to another server and if currentHash is incorrect then it should respond with 400', () => {
-      let mockBlock = testChain.makeNextBlock('ledger3');
+    test('post should respond with a 400 status if sent a block with an incorrect currentHash', () => {
+      let mockBlock = testChain.makeNextBlock('ledger1');
       mockBlock.currentHash = null;
-      console.log(mockBlock.currentHash);
+
       return superagent.post(`${apiURL}/block`)
         .send(mockBlock)
         .then(Promise.reject)
@@ -89,20 +96,20 @@ describe('/block routes', () => {
         });
     });
     
-    test('post should try to send ONE block, but should respond with 404 if wrong route used', () => {
-      let mockBlock = testChain.makeNextBlock('ledger2');
-  
+    test('post should respond with 404 if a block is sent to the wrong route', () => {
+      let mockBlock = testChain.makeNextBlock('ledger1');
+
       return superagent.post(`${apiURL}/`)
         .send(mockBlock)
         .then(Promise.reject)
         .catch(response => {
-          console.log(response.message);
           expect(response.status).toEqual(404);
         });
     });
   });
 
   describe('chainSchema.methods.checkBlockValidity', () => {
+    
     test('should return false if given an invalid index', () => {
       let mockBlock = testChain.makeNextBlock('ledger2');
       mockBlock.index = 'falseIndex';
