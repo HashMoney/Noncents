@@ -42,6 +42,7 @@ let setup = function() {
 describe('/block Routes', () => {
   beforeAll(server.start);
   beforeAll(setup);
+  jest.setTimeout(300000);
   afterAll(server.stop);
 
   describe('POST Route', ()=> {
