@@ -4,10 +4,7 @@ require('./lib/setup');
 
 const server = require('../lib/server');
 const superagent = require('superagent');
-const Block = require('../model/block');
 const Chain = require('../model/chain');
-const faker = require('faker');
-
 // const apiURL = `http://localhost:${process.env.PORT}`;
 const apiURL = `https://hash-money.herokuapp.com`;
 let testChain = new Chain();
@@ -35,9 +32,18 @@ let setup = function() {
           .then(() => {
             console.log('Genesis Block Created');
             // console.log(testChain);
+            return;
+          })
+          .catch(() => {
+            console.log('failed to setup genesis block');
+            return;
           });
       }
       return testChain;
+    })
+    .catch(() => {
+      console.log('failed to setup test files');
+      return;
     });
 
 };
@@ -46,7 +52,7 @@ describe('/block routes', () => {
   beforeAll(server.start);
   beforeAll(setup);
   afterAll(server.stop);
-
+  jest.setTimeout(300000);
   describe('post', ()=> {
     // test('runBlockFactory should continuously build blocks and the testChain length should be the genesis block + the number of elements in the mock ledger Array', () => {
     //   let length = testChain.currentChainArray.length;
@@ -57,20 +63,41 @@ describe('/block routes', () => {
     //     });
     // });
     test('mine should send multiple blocks and return the updated chain', () => {
-      testChain.mine(1)
+      let chainToTest = testChain.updateChain();
+      return testChain.mine(1)
         .then(chain => {
-          expect(chain).not.toBeNull();
+          expect(chain.currentChainArray.length).toEqual(chainToTest.currentChainArray.length + 1);
+          return;
+        })
+        .catch(() => {
+          console.log('failed mining');
+          return;
         });
     });
 
     test('post should send ONE block to another server and respond with 204', () => {
-      let mockBlock = testChain.makeNextBlock('ledger1');
+      let mockBlock;
+      return testChain.updateChain()
+        .then(() => {
+          mockBlock = testChain.makeNextBlock('ledger1');
+          return mockBlock;
+        })
+        .then(newBlock => {
+          return superagent.post(`${apiURL}/block`)
+            .send(newBlock)
+            .then(response => {
+              console.log('successfully posted new block');
+              expect(response.status).toEqual(200);
+              return;
+            })
+            .catch(() => {
+              console.log('failed make next block');
+              return;
+            });
 
-      return superagent.post(`${apiURL}/block`)
-        .send(mockBlock)
-        .then(response => {
-          expect(response.status).toEqual(200);
         });
+
+
     });
 
 
