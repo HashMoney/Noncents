@@ -7,6 +7,7 @@ const superagent = require('superagent');
 const Chain = require('../model/chain');
 // const apiURL = `http://localhost:${process.env.PORT}`;
 const apiURL = `https://hash-money.herokuapp.com`;
+
 let testChain = new Chain();
 
 let setup = function() {
@@ -18,10 +19,10 @@ let setup = function() {
     })
     .then(chain => {
       testChain = chain;
-      // console.log(testChain);
-      if(!testChain){
+      console.log(testChain);
+      if(!testChain.currentChainArray.length){
 
-        testChain = new Chain();
+        // testChain = new Chain();
 
         return new Promise((resolve, reject) => {
           return resolve();

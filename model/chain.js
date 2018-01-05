@@ -108,7 +108,8 @@ chainSchema.methods.updateChain = function(){
     .then(response => {
       // console.log('body : ',response.body);
       // console.log('this :', this);
-      this.currentChainArray = response.body[0].currentChainArray;
+      if(response.body[0])
+        this.currentChainArray = response.body[0].currentChainArray;
       return this;
     });
 };
