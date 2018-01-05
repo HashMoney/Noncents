@@ -4,34 +4,13 @@ const mongoose = require('mongoose');
 const Block = require('./block');
 const httpErrors = require('http-errors');
 const Hashes = require('jshashes');
-const superagent = require('superagent');
-const apiURL = `http://localhost:${process.env.PORT}`;
+// const superagent = require('superagent');
+// const apiURL = `http://localhost:${process.env.PORT}`;
 
 const chainSchema = mongoose.Schema({
   currentChainArray: [],
 });
 
-// Nicholas - this is the main functionality- it builds a new, valid block which can be posted to the other running servers and checked against them.
-chainSchema.methods.runBlockFactory = function(ledgerArray){
-  if(!ledgerArray.length){
-    return console.log('block Factory closed');
-  }else {
-    // console.log(ledgerArray);
-    let ledger = ledgerArray.shift();
-    // console.log(ledger);
-    let newBlock = this.makeNextBlock(ledger);
-    return superagent.post(`${apiURL}/block`)
-      .send(newBlock)
-      .then(response => {
-        if(response.status === 200){
-          // console.log(this.currentChainArray);
-          this.currentChainArray.push(newBlock);
-          // console.log(this.currentChainArray);
-          return this.runBlockFactory(ledgerArray);
-        }
-      });
-  }
-};
 chainSchema.methods.makeGenesisBlock = function() {
   if(this.currentChainArray.length > 0) {
     console.log('Genesis Block Already Exists');
@@ -49,7 +28,6 @@ chainSchema.methods.makeGenesisBlock = function() {
     nonce++;
     currentHash = this.makeBlockHash(index, timeStamp, previousHash, ledger, nonce);
   }
-  // console.log('genesis hash: ', currentHash, 'nonce: ', nonce);
 
   let genesis = new Block(index, previousHash, timeStamp, ledger, currentHash, nonce);
   this.currentChainArray.push(genesis);
@@ -72,7 +50,6 @@ chainSchema.methods._makeNextBlock = function(latestBlock, ledger){
     nonce++;
     newHash = this.makeBlockHash(nextIndex, timeStamp, latestBlock.currentHash, ledger, nonce);
   }
-  // console.log('new hash: ', newHash, 'nonce: ', nonce);
 
   return new Block(nextIndex, latestBlock.currentHash, timeStamp, ledger, newHash, nonce);
 };
@@ -101,21 +78,13 @@ chainSchema.methods.calculateHashForBlock = function(block){
   return hashToCheck;
 };
 
-chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor console logs as error throws
-  // if(this.currentChainArray[block.index]){
-  //   console.log('invalid index');
-  //   return false;
-  // }
+chainSchema.methods.checkBlockValidity = function(block){
   if(this.currentChainArray.length !== block.index){
     console.log('invalid index', block.index);
     return false;
   }
-  // if(!this.currentChainArray[block.index - 1]){
-  //   console.log('invalid index');
-  //   return false;
-  // }
   if(this.currentChainArray[block.index - 1].currentHash !== block.previousHash){
-    console.log('invalid previous currentHash');
+    console.log('invalid previousHash');
     return false;
   }
   if (this.calculateHashForBlock(block) !== block.currentHash){
@@ -125,17 +94,5 @@ chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor conso
   console.log('Block is valid');
   return true;
 };
-
-
-// chainSchema.methods.checkChainValidity = function (updatedChain, stableChain) {
-//   if (stableChain.currentChainArray[0] !== updatedChain.currentChainArray[0]) {
-//     return false;
-//   }
-
-//   for (let block in updatedChain.currentChainArray) {
-//     if (!this.checkBlockValidity(block)) return false;
-//   }
-//   return true;
-// };
 
 module.exports = mongoose.model('chain', chainSchema);
