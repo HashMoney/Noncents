@@ -138,6 +138,7 @@ chainSchema.methods.mine = function(){
       return this.makeNextBlock(faker.lorem.words(10));
     })
     .then(block => {
+      console.log('block to post :', block);
       return superagent.post(`${apiURL}/block`)
         .send(block)
         .then(response =>{
