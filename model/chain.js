@@ -2,14 +2,11 @@
 
 const mongoose = require('mongoose');
 const Block = require('./block');
-const httpErrors = require('http-errors');
 const Hashes = require('jshashes');
 const superagent = require('superagent');
 const logger = require('../lib/logger');
-// const apiURL = `http://localhost:${process.env.PORT}`;
 const apiURL = `https://hash-money.herokuapp.com`;
 const faker = require('faker');
-
 
 const chainSchema = mongoose.Schema({
   currentChainArray: [],
@@ -34,13 +31,11 @@ chainSchema.methods.makeGenesisBlock = function() {
     nonce++;
     currentHash = this.makeBlockHash(index, timeStamp, previousHash, ledger, nonce);
   }
-  // console.log('genesis hash: ', currentHash, 'nonce: ', nonce);
 
   let genesis = new Block(index, previousHash, timeStamp, ledger, currentHash, nonce);
   this.currentChainArray.push(genesis);
   this.save();
   return this;
-
 };
 
 chainSchema.methods.makeNextBlock = function(ledger){
@@ -57,21 +52,9 @@ chainSchema.methods._makeNextBlock = function(latestBlock, ledger){
     nonce++;
     newHash = this.makeBlockHash(nextIndex, timeStamp, latestBlock.currentHash, ledger, nonce);
   }
-  // console.log('new hash: ', newHash, 'nonce: ', nonce);
 
   return new Block(nextIndex, latestBlock.currentHash, timeStamp, ledger, newHash, nonce);
 };
-
-// chainSchema.methods._addNextBlock = function(block) {
-//   if (this.checkBlockValidity(block) === false) {
-//     console.log('your block is broken');
-//     throw new httpErrors(400, 'invalid information in block');
-//   } else {
-//     console.log('adding a new block to chain');
-//     this.currentChainArray.push(block);
-//     return this;
-//   }
-// };
 
 chainSchema.methods.makeBlockHash = function(index, timeStamp, previousHash, ledger, nonce){
   let SHA256 = new Hashes.SHA256;
@@ -80,34 +63,9 @@ chainSchema.methods.makeBlockHash = function(index, timeStamp, previousHash, led
   return nonceHash;
 };
 
-// chainSchema.methods.calculateHashForBlock = function(block){
-//
-//   let hashToCheck = this.makeBlockHash(block.index, block.timeStamp, block.previousHash, block.ledger, block.nonce);
-//   return hashToCheck;
-// };
-
-// chainSchema.methods.checkBlockValidity = function(block){ //TODO: refactor console logs as error throws
-//   if(!this.currentChainArray[block.index - 1]){
-//     console.log('invalid index');
-//     return false;
-//   }
-//   if(this.currentChainArray[block.index - 1].currentHash !== block.previousHash){
-//     console.log('invalid previous currentHash');
-//     return false;
-//   }
-//   if (this.calculateHashForBlock(block) !== block.currentHash){
-//     console.log('invalid currentHash');
-//     return false;
-//   }
-//   console.log('Block is valid');
-//   return true;
-// };
-
 chainSchema.methods.updateChain = function(){
   return superagent.get(`${apiURL}/chain`)
     .then(response => {
-      // console.log('body : ',response.body);
-      // console.log('this :', this);
       if(response.body[0])
         this.currentChainArray = response.body[0].currentChainArray;
       return this;
@@ -125,7 +83,6 @@ chainSchema.methods.mine = function(count=9999){
   count--;
   return this.updateChain()
     .then(() => {
-      // console.log(this);
       return this.makeNextBlock(faker.lorem.words(10));
     })
     .then(block => {
@@ -134,7 +91,6 @@ chainSchema.methods.mine = function(count=9999){
       return superagent.post(`${apiURL}/block`)
         .send(block)
         .then(response =>{
-          // console.log(response.status);
           console.log('block posted successfully');
           logger.log('block posted successfully');
           console.log(response.status);
@@ -142,11 +98,11 @@ chainSchema.methods.mine = function(count=9999){
         })
         .then(() => {
           return this.mine(count);
+        })
+        .catch(() => {
+          console.log('someone else mined this block first');
+          return this.mine(count);
         });
-      // .catch(() => {
-      //   console.log('someone else mined this block first');
-      //   return this.mine(count);
-      // }); //TODO: uncomment this
     });
 };
 
