@@ -39,8 +39,6 @@ chainSchema.methods.makeGenesisBlock = function() {
   let genesis = new Block(index, previousHash, timeStamp, ledger, currentHash, nonce);
   this.currentChainArray.push(genesis);
   this.save();
-  return this;
-
 };
 
 chainSchema.methods.makeNextBlock = function(ledger){
@@ -133,20 +131,16 @@ chainSchema.methods.mine = function(count=9999){
       logger.log('block to post :', block);
       return superagent.post(`${apiURL}/block`)
         .send(block)
-        .then(response =>{
-          // console.log(response.status);
+        .then((response) => {
           console.log('block posted successfully');
           logger.log('block posted successfully');
           console.log(response.status);
-          return;
-        })
-        .then(() => {
           return this.mine(count);
-        });
-      // .catch(() => {
-      //   console.log('someone else mined this block first');
-      //   return this.mine(count);
-      // }); //TODO: uncomment this
+        })
+        .catch(() => {
+          console.log('someone else mined this block first');
+          return this.mine(count);
+        }); 
     });
 };
 
