@@ -9,7 +9,9 @@ const Chain = require('../model/chain');
 const faker = require('faker');
 
 
-const apiURL = `http://localhost:${process.env.PORT}`;
+// const apiURL = `http://localhost:${process.env.PORT}`;
+const apiURL = `https://hash-money.herokuapp.com`;
+
 
 describe('/chain routes', () => {
   beforeAll(server.start);
