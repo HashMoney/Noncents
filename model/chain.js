@@ -48,7 +48,7 @@ chainSchema.methods.makeGenesisBlock = function() {
 
   let currentHash = this.makeBlockHash(index, timeStamp, previousHash, ledger, nonce);
 
-  while (currentHash.slice(0, 2) !== '00') {
+  while (currentHash.slice(0, 3) !== '000') {
     nonce++;
     currentHash = this.makeBlockHash(index, timeStamp, previousHash, ledger, nonce);
   }
@@ -150,6 +150,9 @@ chainSchema.methods.mine = function(){
           return;
         })
         .then(() => {
+          return this.mine();
+        })
+        .catch(() => {
           return this.mine();
         });
     });
