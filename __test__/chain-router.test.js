@@ -4,6 +4,7 @@ require('./lib/setup');
 
 const server = require('../lib/server');
 const superagent = require('superagent');
+// const apiURL = `http://localhost:${process.env.PORT}`; //Used for local testing
 const apiURL = `https://hash-money.herokuapp.com`;
 
 describe('/chain routes', () => {
