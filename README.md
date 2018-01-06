@@ -138,5 +138,8 @@ This project is licensed under the MIT License - see the [LICENSE.md](./LICENSE)
 
 **Heroku App** Deployment: https://hash-money.herokuapp.com/
 
+**Heroku Chain Get Route**:
+http://hash-money.herokuapp.com/chain
+
 ## Acknowledgments
 - We referenced a compact 200-line blockchain called Naivechain, written in JS, in order to define best practices for our code https://github.com/lhartikk/naivechain/blob/master/main.js
