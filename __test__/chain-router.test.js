@@ -4,7 +4,6 @@ require('./lib/setup');
 
 const server = require('../lib/server');
 const superagent = require('superagent');
-
 const apiURL = `https://hash-money.herokuapp.com`;
 
 
