@@ -480,3 +480,7 @@
 {"level":"info","message":"Server is listening on port 7000","timestamp":"2018-01-05T22:10:44.749Z"}
 {"level":"info","message":"Server is listening on port 7000","timestamp":"2018-01-06T21:40:35.595Z"}
 {"level":"info","message":"Server is listening on port 7000","timestamp":"2018-01-06T23:08:27.898Z"}
+{"level":"info","message":"Server is listening on port 7000","timestamp":"2018-01-06T23:46:10.926Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-06T23:50:13.112Z"}
+{"level":"info","message":"Server is listening on port 7000","timestamp":"2018-01-06T23:50:13.415Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-06T23:50:14.313Z"}

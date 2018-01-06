@@ -28,6 +28,5 @@ describe('/chain routes', () => {
         });
     });
   });
-
-  //TODO: ADD MORE TESTS
 });
+//TODO: ADD MORE TESTS

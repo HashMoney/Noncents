@@ -53,6 +53,11 @@ describe('/block Route', () => {
   jest.setTimeout(300000);
 
   describe('POST', ()=> {
+
+    test('Proper Setup should return undefined for makeGenesisBlock', () => {
+      expect(testChain.makeGenesisBlock()).toBeUndefined();
+    });
+
     test('Mine should send multiple blocks and return the updated chain', () => {
       let chainToTest = testChain.updateChain();
       return testChain.mine(1)
@@ -61,7 +66,7 @@ describe('/block Route', () => {
           return;
         })
         .catch(() => {
-          console.log('failed mining');  //TODO: Errors: Throw a proper Error here!
+          console.log('failed mining');
           return;
         });
     });
@@ -88,8 +93,9 @@ describe('/block Route', () => {
         });
     });
 
-    test('Post should send ONE block to another server and if index error, should respond with 400', () => {
-      let mockBlock = testChain.makeNextBlock('ledger2');
+
+    test('post should respond with a 400 status if sent a block with an incorrect index', () => {
+      let mockBlock = testChain.makeNextBlock('ledger1');
       mockBlock.index = null;
 
       return superagent.post(`${apiURL}/block`)
@@ -100,18 +106,40 @@ describe('/block Route', () => {
         });
     });
 
-    test('Post should try to send ONE block, but should respond with 404 if wrong route used', () => {
-      let mockBlock = testChain.makeNextBlock('ledger2');
+    test('post should respond with a 400 status if sent a block with an incorrect previousHash', () => {
+      let mockBlock = testChain.makeNextBlock('ledger1');
+      mockBlock.previousHash = null;
+
+      return superagent.post(`${apiURL}/block`)
+        .send(mockBlock)
+        .then(Promise.reject)
+        .catch(response => {
+          expect(response.status).toEqual(400);
+        });
+    });
+
+    test('post should respond with a 400 status if sent a block with an incorrect currentHash', () => {
+      let mockBlock = testChain.makeNextBlock('ledger1');
+      mockBlock.currentHash = null;
+
+      return superagent.post(`${apiURL}/block`)
+        .send(mockBlock)
+        .then(Promise.reject)
+        .catch(response => {
+          expect(response.status).toEqual(400);
+        });
+    });
+
+    test('post should respond with 404 if a block is sent to the wrong route', () => {
+      let mockBlock = testChain.makeNextBlock('ledger1');
 
       return superagent.post(`${apiURL}/`)
         .send(mockBlock)
         .then(Promise.reject)
         .catch(response => {
-          console.log(response.message);
           expect(response.status).toEqual(404);
         });
     });
   });
-
-  //TODO: ADD MORE TESTS
 });
+//TODO: ADD MORE TESTS
