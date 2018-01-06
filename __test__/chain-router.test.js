@@ -6,7 +6,6 @@ const server = require('../lib/server');
 const superagent = require('superagent');
 const apiURL = `https://hash-money.herokuapp.com`;
 
-
 describe('/chain routes', () => {
   beforeAll(server.start);
   afterAll(server.stop);
@@ -15,6 +14,7 @@ describe('/chain routes', () => {
     test('GET should respond with a body of the array of chains and a status of 204', () => {
       return superagent.get(`${apiURL}/chain`)
         .then(response => {
+          expect(response.body[0].currentChainArray.length).toBeGreaterThan(1);
           expect(response.status).toEqual(200);
         });
     });
