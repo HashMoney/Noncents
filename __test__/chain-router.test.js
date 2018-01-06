@@ -18,5 +18,13 @@ describe('/chain routes', () => {
           expect(response.status).toEqual(200);
         });
     });
+
+    test(' should respond with a 404 when the route is incorrect', () => {
+      return superagent.get(`${apiURL}/chan`)
+        .then(Promise.reject)
+        .catch(response => {
+          expect(response.status).toEqual(404);
+        });
+    });
   });
 });
