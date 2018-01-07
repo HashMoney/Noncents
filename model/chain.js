@@ -11,6 +11,9 @@ const chainSchema = mongoose.Schema({
   currentChainArray: [],
 });
 
+const leadingZeros = '000';
+const hashSlice = 3;
+
 chainSchema.methods.makeGenesisBlock = function() {
   if(this.currentChainArray.length > 0) {
     console.log('Genesis Block Already Exists');
@@ -24,7 +27,7 @@ chainSchema.methods.makeGenesisBlock = function() {
 
   let currentHash = this.makeBlockHash(index, timeStamp, previousHash, ledger, nonce);
 
-  while (currentHash.slice(0, 3) !== '000') {
+  while (currentHash.slice(0, hashSlice) !== leadingZeros) {
     nonce++;
     currentHash = this.makeBlockHash(index, timeStamp, previousHash, ledger, nonce);
   }
@@ -46,7 +49,7 @@ chainSchema.methods._makeNextBlock = function(latestBlock, ledger){
   let timeStamp = new Date().toString();
   let nonce = 0;
   let newHash = this.makeBlockHash(nextIndex, timeStamp, latestBlock.currentHash, ledger, nonce);
-  while (newHash.slice(0, 3) !== '000') {
+  while (newHash.slice(0, hashSlice) !== leadingZeros) {
     nonce++;
     newHash = this.makeBlockHash(nextIndex, timeStamp, latestBlock.currentHash, ledger, nonce);
   }

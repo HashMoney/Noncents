@@ -4,9 +4,7 @@ require('./lib/setup');
 
 const server = require('../lib/server');
 const superagent = require('superagent');
-const Block = require('../model/block');
 const Chain = require('../model/chain');
-const faker = require('faker');
 
 const apiURL = `http://localhost:${process.env.PORT}`;
 let testChain = null;
@@ -47,7 +45,7 @@ describe('/block Routes', () => {
 
   describe('POST Route', ()=> {
 
-    test('Proper Setup should return undefined for makeGenesisBlock', () => {
+    test('Proper Setup should return undefined for makeGenesisBlock', () => { //THIS test may only work if DB is cleared - Seth
       expect(testChain.makeGenesisBlock()).toBeUndefined();
     });
     
