@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const Block = require('./block');
 const httpErrors = require('http-errors');
 const Hashes = require('jshashes');
-// const superagent = require('superagent');
-// const apiURL = `http://localhost:${process.env.PORT}`;
+// const superagent = require('superagent'); //For Future Dev - Seth
+// const apiURL = `http://localhost:${process.env.PORT}`; // For local testing - Seth
 
 const chainSchema = mongoose.Schema({
   currentChainArray: [],
@@ -80,15 +80,15 @@ chainSchema.methods.calculateHashForBlock = function(block){
 
 chainSchema.methods.checkBlockValidity = function(block){
   if(this.currentChainArray.length !== block.index){
-    console.log('invalid index', block.index);
+    console.log('invalid index', block.index);  //TODO: Erors: Throw a proper error here! - Seth
     return false;
   }
   if(this.currentChainArray[block.index - 1].currentHash !== block.previousHash){
-    console.log('invalid previousHash');
+    console.log('invalid previousHash');  //TODO: Erors: Throw a proper error here! - Seth
     return false;
   }
   if (this.calculateHashForBlock(block) !== block.currentHash){
-    console.log('invalid currentHash');
+    console.log('invalid currentHash'); //TODO: Erors: Throw a proper error here! - Seth
     return false;
   }
   console.log('Block is valid');
