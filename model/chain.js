@@ -10,8 +10,8 @@ const logger = require('../lib/logger');
 const apiURL = `https://hash-money.herokuapp.com`;
 const faker = require('faker');
 
-let leadingZeros = '000';
-let hashSlice = 3;
+const leadingZeros = '000';
+const hashSlice = 3;
 
 const chainSchema = mongoose.Schema({
   currentChainArray: [],
