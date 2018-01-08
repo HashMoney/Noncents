@@ -105,6 +105,31 @@ describe('/block Routes', () => {
           expect(response.status).toEqual(404);
         });
     });
+
+    test('Post should return a 400 status if the block is missing properties', () => {
+      let mockBlock = testChain.makeNextBlock('ledger1');
+      mockBlock.index  = undefined;
+
+      return superagent.post(`${apiURL}/block`)
+        .send(mockBlock)
+        .then(Promise.reject)
+        .catch(response => {
+          expect(response.status).toEqual(400);
+        });      
+    });
+
+    test('Post should return a 400 status if the block has extra properties', () => {
+      let mockBlock = testChain.makeNextBlock('ledger1');
+      mockBlock.author  = 'fakeProperty';
+      mockBlock.name  = 'fakeProperty';
+
+      return superagent.post(`${apiURL}/block`)
+        .send(mockBlock)
+        .then(Promise.reject)
+        .catch(response => {
+          expect(response.status).toEqual(400);
+        });      
+    });
   });
 
   describe('chainSchema.methods.checkBlockValidity', () => {
