@@ -5,7 +5,7 @@ require('./lib/setup');
 const server = require('../lib/server');
 const superagent = require('superagent');
 const Chain = require('../model/chain');
-// const apiURL = `http://localhost:${process.env.PORT}`;
+// const apiURL = `http://localhost:${process.env.PORT}`; //Used for local testing
 const apiURL = `https://hash-money.herokuapp.com`;
 
 let testChain = new Chain();
@@ -22,8 +22,6 @@ let setup = function() {
       console.log(testChain);
       if(!testChain.currentChainArray.length){
 
-        // testChain = new Chain();
-
         return new Promise((resolve, reject) => {
           return resolve();
         })
@@ -31,39 +29,36 @@ let setup = function() {
             return testChain.makeGenesisBlock();
           })
           .then(() => {
-            console.log('Genesis Block Created');
-            // console.log(testChain);
+            console.log('Genesis Block created');
             return;
           })
           .catch(() => {
-            console.log('failed to setup genesis block');
+            console.log('Failed to setup genesis block'); //TODO: Errors: Throw a proper Error here!
             return;
           });
       }
       return testChain;
     })
     .catch(() => {
-      console.log('failed to setup test files');
+      console.log('Failed to setup test files'); //TODO: Errors: Throw a proper Error here!
       return;
     });
 
 };
 
-describe('/block routes', () => {
+describe('/block Route', () => {
   beforeAll(server.start);
   beforeAll(setup);
   afterAll(server.stop);
   jest.setTimeout(300000);
-  describe('post', ()=> {
-    // test('runBlockFactory should continuously build blocks and the testChain length should be the genesis block + the number of elements in the mock ledger Array', () => {
-    //   let length = testChain.currentChainArray.length;
-    //   let mockFactoryLedgerArray = ['flone', 'fltwo', 'flthree', 'flfour', 'flfive'];
-    //   return testChain.runBlockFactory(mockFactoryLedgerArray)
-    //     .then(() => {
-    //       expect(testChain.currentChainArray.length).toEqual(length + 5);
-    //     });
-    // });
-    test('mine should send multiple blocks and return the updated chain', () => {
+
+  describe('POST', ()=> {
+
+    test('Proper Setup should return undefined for makeGenesisBlock', () => {
+      expect(testChain.makeGenesisBlock()).toBeUndefined();
+    });
+
+    test('Mine should send multiple blocks and return the updated chain', () => {
       let chainToTest = testChain.updateChain();
       return testChain.mine(1)
         .then(chain => {
@@ -76,7 +71,7 @@ describe('/block routes', () => {
         });
     });
 
-    test('post should send ONE block to another server and respond with 204', () => {
+    test('Post should send ONE block to another server and respond with 204', () => {
       let mockBlock;
       return testChain.updateChain()
         .then(() => {
@@ -95,21 +90,14 @@ describe('/block routes', () => {
               console.log('failed make next block');
               return;
             });
-
         });
-
-
     });
 
 
-    //TODO: ADD EDGE CASE TESTS
-
-    //TODO: ADD ERROR CHECKING TESTS
-    test('post should send ONE block to another server and if index error, should respond with 400', () => {
-      let mockBlock = testChain.makeNextBlock('ledger2');
-      // console.log('first index', mockBlock.index);
+    test('post should respond with a 400 status if sent a block with an incorrect index', () => {
+      let mockBlock = testChain.makeNextBlock('ledger1');
       mockBlock.index = null;
-      // console.log('second index', mockBlock.index);
+
       return superagent.post(`${apiURL}/block`)
         .send(mockBlock)
         .then(Promise.reject)
@@ -118,45 +106,40 @@ describe('/block routes', () => {
         });
     });
 
-    test('post should try to send ONE block, but should respond with 404 if wrong route used', () => {
-      let mockBlock = testChain.makeNextBlock('ledger2');
+    test('post should respond with a 400 status if sent a block with an incorrect previousHash', () => {
+      let mockBlock = testChain.makeNextBlock('ledger1');
+      mockBlock.previousHash = null;
+
+      return superagent.post(`${apiURL}/block`)
+        .send(mockBlock)
+        .then(Promise.reject)
+        .catch(response => {
+          expect(response.status).toEqual(400);
+        });
+    });
+
+    test('post should respond with a 400 status if sent a block with an incorrect currentHash', () => {
+      let mockBlock = testChain.makeNextBlock('ledger1');
+      mockBlock.currentHash = null;
+
+      return superagent.post(`${apiURL}/block`)
+        .send(mockBlock)
+        .then(Promise.reject)
+        .catch(response => {
+          expect(response.status).toEqual(400);
+        });
+    });
+
+    test('post should respond with 404 if a block is sent to the wrong route', () => {
+      let mockBlock = testChain.makeNextBlock('ledger1');
 
       return superagent.post(`${apiURL}/`)
         .send(mockBlock)
         .then(Promise.reject)
         .catch(response => {
-          console.log(response.message);
           expect(response.status).toEqual(404);
         });
     });
-
-    // test('post should try to send ONE block, but should respond with 404 if wrong route used', () => {
-    //   let blockObj;
-    //   let blockObj2;
-    //   return new Promise ((resolve,reject) => {
-    //     return resolve();
-    //   })
-    //     .then(() => {
-    //       let blockObj = testChain.makeNextBlock('duplicate ledger');
-    //       console.log(blockObj);
-    //       return blockObj;
-    //     })
-    //     .then(blockObj => {
-    //       console.log(blockObj);
-    //       return superagent.post(`${apiURL}/block`)
-    //         .send({blockObj});
-    //     })
-    //     .then((block) => {
-    //       blockObj2 = block;
-    //       console.log(blockObj2);
-    //       return superagent.post(`${apiURL}/block`)
-    //         .send({ blockObj2});
-    //     })
-    //     .then(Promise.reject)
-    //     .catch(response => {
-    //       console.log(response.message);
-    //       expect(response.status).toEqual(409);
-    //     });
-    // });
   });
 });
+//TODO: ADD MORE TESTS

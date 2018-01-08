@@ -36,13 +36,13 @@ If you would like to begin mining immediately, use the following command
 ```
 node index.js
 ```
-![Mining Starts](https://github.com/HashMoney/block-chain-dev/blob/nodeStaging/Screen%20Shot%202018-01-05%20at%208.58.32%20AM.png?raw=true)
+![Mining Starts](StartingMining.png)
 
 ***↑ Before Mining***
 
 ***After Mining ↓***
 
-![Mining Example](https://github.com/HashMoney/block-chain-dev/blob/nodeStaging/Screen%20Shot%202018-01-05%20at%208.58.03%20AM.png?raw=true)
+![Mining Example](Mining.png)
 
 For advanced users, a server side code base is available under the branch herokuStaging at the project's git repository.   
 
@@ -53,7 +53,14 @@ https://github.com/HashMoney/block-chain-dev.git
 ## Running the tests
 To run the tests, you type into the command line `npm run test`
 This will run all tests and output a coverage level (provided by Jest) describing percentage of lines covered across documents.
-![Test Results](https://github.com/HashMoney/block-chain-dev/blob/nodeStaging/Screen%20Shot%202018-01-05%20at%208.43.45%20AM.png?raw=true)
+
+**Main Server Test Results:**
+
+![Main Server Test Results](MainServerTestResults.png)
+
+**Node Server Test Results:**
+
+![Node Server Test Results](NodeServerTestResults.png)
 
 
 
@@ -130,6 +137,9 @@ This project is licensed under the MIT License - see the [LICENSE.md](./LICENSE)
 **Travis CI**: https://travis-ci.org/HashMoney/block-chain-dev
 
 **Heroku App** Deployment: https://hash-money.herokuapp.com/
+
+**Heroku Chain Get Route**:
+http://hash-money.herokuapp.com/chain
 
 ## Acknowledgments
 - We referenced a compact 200-line blockchain called Naivechain, written in JS, in order to define best practices for our code https://github.com/lhartikk/naivechain/blob/master/main.js

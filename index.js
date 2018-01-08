@@ -1,6 +1,8 @@
 'use strict';
+// This index is used for the Node server to Mine!
 
-const superagent = require('superagent');
+//TODO: Properly change this index to a Mine.js file and use in a CLI or GUI.
+// const superagent = require('superagent'); //TODO: Future Stretch goals
 const Chain = require('./model/chain');
 const server = require('./lib/server');
 
