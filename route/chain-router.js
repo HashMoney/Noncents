@@ -2,7 +2,7 @@
 
 const { Router } = require('express');
 const jsonParser = require('body-parser').json();
-// const httpErrors = require('http-errors');
+// const httpErrors = require('http-errors'); // For Future Use - Seth
 const Chain = require('../model/chain');
 
 
@@ -14,5 +14,5 @@ chainRouter.get('/chain', jsonParser, (request, response, next) => {
     .then(result => {
       response.send(result);
     })
-    .catch(next);
+    .catch(next); //TODO: Erors: Throw a proper error here! - Seth
 });

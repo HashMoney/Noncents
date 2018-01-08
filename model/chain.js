@@ -4,12 +4,15 @@ const mongoose = require('mongoose');
 const Block = require('./block');
 const httpErrors = require('http-errors');
 const Hashes = require('jshashes');
-// const superagent = require('superagent');
-// const apiURL = `http://localhost:${process.env.PORT}`;
+// const superagent = require('superagent'); //For Future Dev - Seth
+// const apiURL = `http://localhost:${process.env.PORT}`; // For local testing - Seth
 
 const chainSchema = mongoose.Schema({
   currentChainArray: [],
 });
+
+const leadingZeros = '000';
+const hashSlice = 3;
 
 chainSchema.methods.makeGenesisBlock = function() {
   if(this.currentChainArray.length > 0) {
@@ -24,7 +27,7 @@ chainSchema.methods.makeGenesisBlock = function() {
 
   let currentHash = this.makeBlockHash(index, timeStamp, previousHash, ledger, nonce);
 
-  while (currentHash.slice(0, 3) !== '000') {
+  while (currentHash.slice(0, hashSlice) !== leadingZeros) {
     nonce++;
     currentHash = this.makeBlockHash(index, timeStamp, previousHash, ledger, nonce);
   }
@@ -46,7 +49,7 @@ chainSchema.methods._makeNextBlock = function(latestBlock, ledger){
   let timeStamp = new Date().toString();
   let nonce = 0;
   let newHash = this.makeBlockHash(nextIndex, timeStamp, latestBlock.currentHash, ledger, nonce);
-  while (newHash.slice(0, 3) !== '000') {
+  while (newHash.slice(0, hashSlice) !== leadingZeros) {
     nonce++;
     newHash = this.makeBlockHash(nextIndex, timeStamp, latestBlock.currentHash, ledger, nonce);
   }
@@ -80,15 +83,15 @@ chainSchema.methods.calculateHashForBlock = function(block){
 
 chainSchema.methods.checkBlockValidity = function(block){
   if(this.currentChainArray.length !== block.index){
-    console.log('invalid index', block.index);
+    console.log('invalid index', block.index);  //TODO: Erors: Throw a proper error here! - Seth
     return false;
   }
   if(this.currentChainArray[block.index - 1].currentHash !== block.previousHash){
-    console.log('invalid previousHash');
+    console.log('invalid previousHash');  //TODO: Erors: Throw a proper error here! - Seth
     return false;
   }
   if (this.calculateHashForBlock(block) !== block.currentHash){
-    console.log('invalid currentHash');
+    console.log('invalid currentHash'); //TODO: Erors: Throw a proper error here! - Seth
     return false;
   }
   console.log('Block is valid');
