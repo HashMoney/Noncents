@@ -1,6 +1,7 @@
 'use strict';
 
 const {Router} = require('express');
+const httpErrors = require('http-errors');
 const jsonParser = require('body-parser').json();
 const Chain = require('../model/chain');
 
@@ -38,8 +39,18 @@ blockRouter.post('/block', jsonParser, (request, response, next) => {
           // This would need a check of the request.body to have certain properties and ONLY those properties.
 
           let blockToValidate = request.body;
-          stableChain._addNextBlock(blockToValidate);
-          return stableChain.save();
+
+          if (blockToValidate.hasOwnProperty('nonce') && blockToValidate.hasOwnProperty('currentHash') && blockToValidate.hasOwnProperty('ledger') && blockToValidate.hasOwnProperty('timeStamp') && blockToValidate.hasOwnProperty('previousHash') && blockToValidate.hasOwnProperty('index') && Object.keys(blockToValidate).length === 6) {
+            
+            console.log('hit prop check');
+            console.log(Object.keys(blockToValidate).length);
+            stableChain._addNextBlock(blockToValidate);
+
+            return stableChain.save();
+          } else {
+            console.log('hit prop else to throw error');
+            throw new httpErrors(400, 'invalid information in block');
+          } 
         })
         .then(() => {
           response.send(stableChain.currentChainArray);

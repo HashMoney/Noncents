@@ -298,3 +298,35 @@
 {"level":"info","message":"Processing : GET on : /chan","timestamp":"2018-01-05T16:41:22.831Z"}
 {"level":"info","message":"Returning a 404 from the catch all route.","timestamp":"2018-01-05T16:41:22.832Z"}
 {"level":"info","message":"Server is off","timestamp":"2018-01-05T16:41:22.833Z"}
+{"level":"info","message":"Server is listening on port 7000","timestamp":"2018-01-08T20:52:27.218Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-08T20:52:31.703Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-08T20:52:32.254Z"}
+{"level":"info","message":"Server is listening on port 7000","timestamp":"2018-01-08T20:53:59.782Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-08T20:54:03.186Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-08T20:54:03.362Z"}
+{"level":"info","message":"Server is listening on port 7000","timestamp":"2018-01-08T20:55:37.910Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-08T20:55:38.970Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-08T20:55:39.067Z"}
+{"level":"info","message":"Server is listening on port 7000","timestamp":"2018-01-08T21:06:11.429Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-08T21:06:27.541Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-08T21:06:30.846Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-08T21:06:30.922Z"}
+{"level":"info","message":"Server is listening on port 7000","timestamp":"2018-01-08T21:07:08.523Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-08T21:07:12.138Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-08T21:07:46.510Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-08T21:07:46.715Z"}
+{"level":"info","message":"Server is listening on port 7000","timestamp":"2018-01-08T21:09:23.884Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-08T21:10:22.782Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-08T21:10:49.219Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-08T21:11:15.658Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-08T21:11:16.743Z"}
+{"level":"info","message":"Processing : POST on : /","timestamp":"2018-01-08T21:11:17.901Z"}
+{"level":"info","message":"Returning a 404 from the catch all route.","timestamp":"2018-01-08T21:11:17.902Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-08T21:11:35.881Z"}
+{"level":"info","message":"Processing : POST on : /block","timestamp":"2018-01-08T21:11:46.352Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-08T21:12:48.642Z"}
+{"level":"info","message":"Server is listening on port 7000","timestamp":"2018-01-08T21:12:48.871Z"}
+{"level":"info","message":"Processing : GET on : /chain","timestamp":"2018-01-08T21:12:48.916Z"}
+{"level":"info","message":"Processing : GET on : /chan","timestamp":"2018-01-08T21:12:49.343Z"}
+{"level":"info","message":"Returning a 404 from the catch all route.","timestamp":"2018-01-08T21:12:49.344Z"}
+{"level":"info","message":"Server is off","timestamp":"2018-01-08T21:12:49.346Z"}
