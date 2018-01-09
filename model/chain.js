@@ -98,7 +98,7 @@ chainSchema.methods.mine = function(count=9999){ // 9999 limits the times mined 
       return superagent.post(`${apiURL}/block`)
         .send(block)
         .then(response =>{
-          console.log('Block posted successfully');
+          console.log('----------------------------------------\nYour Block posted successfully!\n----------------------------------------');
           logger.log('Block posted successfully');
           console.log(response.status);
           return;
@@ -107,7 +107,7 @@ chainSchema.methods.mine = function(count=9999){ // 9999 limits the times mined 
           return this.mine(count);
         })
         .catch(() => {
-          console.log('someone else mined this block first'); //TODO: Errors: Throw a proper Error here!
+          console.log('----------------------------------------\nSomeone else mined this block before you\nOR\nYour Block is Invalid!\n----------------------------------------'); //TODO: Errors: Throw a proper Error here!
           return this.mine(count);
         });
     });
