@@ -5,7 +5,7 @@ class Block {
     this.index = index;
     this.previousHash = previousHash;
     this.timeStamp = timeStamp;
-    // this.ledger = ledger;
+    this.ledger = ledger;
     this.currentHash = currentHash;
     this.nonce = nonce;
   }
