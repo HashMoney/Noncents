@@ -6,8 +6,7 @@ const Block = require('./block');
 const Hashes = require('jshashes');
 const superagent = require('superagent');
 const logger = require('../lib/logger');
-// const apiURL = http://localhost:${process.env.PORT}`;
-const apiURL = `https://hash-money.herokuapp.com`;
+const apiURL = `https://noncents.herokuapp.com`;
 const faker = require('faker');
 
 const leadingZeros = '000';

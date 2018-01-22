@@ -19,12 +19,12 @@ Create a new directory where you would like to store our project.
 
 ex: 
 ```
-mkdir hash-money
+mkdir noncents
 ```
 Clone the repository to this directory
 
 ```
-git clone https://github.com/HashMoney/block-chain-dev.git
+git clone https://github.com/HashMoney/Noncents.git
 
 ```
 Install NPM dependencies
@@ -47,7 +47,7 @@ node index.js
 For advanced users, a server side code base is available under the branch herokuStaging at the project's git repository.   
 
 ```
-https://github.com/HashMoney/block-chain-dev.git
+https://github.com/HashMoney/Noncents.git
 ```
 
 ## Running the tests
@@ -132,14 +132,14 @@ chainSchema.methods.makeBlockHash = function(index, timeStamp, previousHash, led
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](./LICENSE) file for details
 
-**WIKI**: https://github.com/HashMoney/block-chain-dev/wiki
+**WIKI**: https://github.com/HashMoney/Noncents/wiki
 
-**Travis CI**: https://travis-ci.org/HashMoney/block-chain-dev
+**Travis CI**: https://travis-ci.org/HashMoney/Noncents
 
-**Heroku App** Deployment: https://hash-money.herokuapp.com/
+**Heroku App** Deployment: https://noncents.herokuapp.com/
 
 **Heroku Chain Get Route**:
-http://hash-money.herokuapp.com/chain
+http://noncents.herokuapp.com/chain
 
 ## Acknowledgments
 - We referenced a compact 200-line blockchain called Naivechain, written in JS, in order to define best practices for our code https://github.com/lhartikk/naivechain/blob/master/main.js
