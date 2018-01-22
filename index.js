@@ -12,5 +12,5 @@ server.start();
 
 let stableChain = new Chain();
 
-console.log('beginning mining');
+console.log(`----------------------------------------\nThis Node is now Mining for the next block \n   'Ctrl+c' to stop mining\n----------------------------------------`);
 stableChain.mine();

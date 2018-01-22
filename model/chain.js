@@ -81,7 +81,7 @@ chainSchema.methods.updateChain = function(){
 
 chainSchema.methods.mine = function(count=9999){ // 9999 limits the times mined to for testing purposes
   if(count === 0){
-    console.log('Finished mining for now');
+    console.log(' Your node has Finished mining for now');
     return this.updateChain()
       .then(chain => {
         return chain;
@@ -93,21 +93,22 @@ chainSchema.methods.mine = function(count=9999){ // 9999 limits the times mined 
       return this.makeNextBlock(faker.lorem.words(10));
     })
     .then(block => {
-      console.log('Block to post :', block);
+      console.log('\nBlock to post :', block ,'\n');
       logger.log('Block to post :', block);
       return superagent.post(`${apiURL}/block`)
         .send(block)
         .then(response =>{
-          console.log('Block posted successfully');
+          console.log('\nMain Server Response Status: ', response.status);
+          console.log('----------------------------------------\nYour Block posted successfully!\n----------------------------------------\n');
           logger.log('Block posted successfully');
-          console.log(response.status);
           return;
         })
         .then(() => {
           return this.mine(count);
         })
-        .catch(() => {
-          console.log('someone else mined this block first'); //TODO: Errors: Throw a proper Error here!
+        .catch((err) => {
+          console.log('\nMain Server Response Status: ', err.status);
+          console.log('----------------------------------------\nSomeone else mined this block before you\n   OR\nYour Block is Invalid!\n----------------------------------------\n'); //TODO: Errors: Throw a proper Error here!
           return this.mine(count);
         });
     });
