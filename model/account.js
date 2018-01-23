@@ -47,7 +47,7 @@ accountSchema.methods.createToken = function(){
     .then(account => {
       return jsonWebToken.sign({
         tokenSeed : account.tokenSeed,
-      }, process.env.GIF_CLOUD_SECRET);
+      }, process.env.CHAIN_CLOUD_SECRET);
     });
 };
 
