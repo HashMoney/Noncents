@@ -14,21 +14,19 @@
   "license": "MIT",
   "devDependencies": {
     "dotenv": "^4.0.0",
-    "eslint": "^4.12.1",
+    "eslint": "^4.19.1",
     "jest": "^21.2.1",
-    "superagent": "^3.8.1"
+    "superagent": "^3.8.3"
   },
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
     "faker": "^4.1.0",
     "httperrors": "^2.3.0",
-    "jshashes": "^1.0.7",
-    "mongoose": "^4.13.7",
-    "winston": "^2.4.0",
-    "eslint": "^4.12.1",
     "jest": "^21.2.1",
-    "superagent": "^3.8.1"
+    "jshashes": "^1.0.7",
+    "mongoose": "^4.13.17",
+    "winston": "^2.4.4"
   },
   "engines": {
     "node": "8.9.3"
